@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hgraber_ui/features/main_page/wigets.dart';
+import 'package:go_router/go_router.dart';
+
+import 'wigets.dart';
 import 'bloc.dart';
 
 class MainPageView extends StatelessWidget {
@@ -52,8 +54,14 @@ class MainPageView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: "1",
             child: const Icon(Icons.refresh),
             onPressed: () => context.read<MainPageBloc>().add(FetchMainEvent()),
+          ),
+          FloatingActionButton(
+            heroTag: "2",
+            child: const Icon(Icons.book),
+            onPressed: () => context.go("/book/3"),
           ),
         ],
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hgraber_ui/repository/repository.dart';
 
 class WorkersWidget extends StatelessWidget {
-  final List<WorkerData> model;
+  final List<Worker> model;
 
   const WorkersWidget(this.model, {super.key});
 
@@ -32,7 +32,7 @@ class WorkersWidget extends StatelessWidget {
 }
 
 class MainInfoWidget extends StatelessWidget {
-  final MainInfoData model;
+  final MainPageData model;
 
   const MainInfoWidget(this.model, {super.key});
 

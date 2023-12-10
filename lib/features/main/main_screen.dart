@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hgraber_ui/repository/repository.dart';
+
 import 'view.dart';
 import 'bloc.dart';
 
-class MainPage extends StatelessWidget {
-  const MainPage({
+class MainScreen extends StatelessWidget {
+  const MainScreen({
     super.key,
   });
 

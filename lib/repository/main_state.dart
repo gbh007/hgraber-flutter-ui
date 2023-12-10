@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'main_state.g.dart';
 
 @JsonSerializable()
-class WorkerData {
+class Worker {
   final String name;
   @JsonKey(name: "in_queue", defaultValue: 0)
   final int inQueue;
@@ -12,34 +12,34 @@ class WorkerData {
   @JsonKey(defaultValue: 0)
   final int runners;
 
-  WorkerData({
+  Worker({
     required this.name,
     required this.inQueue,
     required this.inWork,
     required this.runners,
   });
 
-  factory WorkerData.fromJson(Map<String, dynamic> json) =>
+  factory Worker.fromJson(Map<String, dynamic> json) =>
       _$WorkerDataFromJson(json);
   Map<String, dynamic> toJson() => _$WorkerDataToJson(this);
 }
 
 @JsonSerializable()
-class MonitorData {
-  final List<WorkerData>? workers;
+class Monitor {
+  final List<Worker>? workers;
 
-  MonitorData({
+  Monitor({
     this.workers,
   });
 
-  factory MonitorData.fromJson(Map<String, dynamic> json) =>
+  factory Monitor.fromJson(Map<String, dynamic> json) =>
       _$MonitorDataFromJson(json);
   Map<String, dynamic> toJson() => _$MonitorDataToJson(this);
 }
 
 @JsonSerializable()
-class MainInfoData {
-  final MonitorData? monitor;
+class MainPageData {
+  final Monitor? monitor;
 
   @JsonKey(defaultValue: 0)
   final int count;
@@ -50,7 +50,7 @@ class MainInfoData {
   @JsonKey(name: "page_count", defaultValue: 0)
   final int pageCount;
 
-  MainInfoData({
+  MainPageData({
     this.monitor,
     required this.count,
     required this.notLoadCount,
@@ -58,7 +58,7 @@ class MainInfoData {
     required this.pageCount,
   });
 
-  factory MainInfoData.fromJson(Map<String, dynamic> json) =>
+  factory MainPageData.fromJson(Map<String, dynamic> json) =>
       _$MainInfoDataFromJson(json);
   Map<String, dynamic> toJson() => _$MainInfoDataToJson(this);
 }

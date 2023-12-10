@@ -10,7 +10,7 @@ sealed class MainPageState {}
 class MainPageLoadingState extends MainPageState {}
 
 class MainPageLoadedState extends MainPageState {
-  final MainInfoData model;
+  final MainPageData model;
 
   MainPageLoadedState(this.model);
 }
