@@ -1,0 +1,12 @@
+{
+    "name": "hgraber_ui",
+    "short_name": "hgraber_ui",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "HGraber UI",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": []
+}
