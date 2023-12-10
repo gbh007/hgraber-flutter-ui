@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'main_state.dart';
+import 'repository.dart';
 
-class HGraberClient {
+class HGraberHTTPClient extends HGraberClient {
   late final DioForNative _client;
 
-  HGraberClient({
+  HGraberHTTPClient({
     required String baseUrl,
   }) {
     _client = DioForNative(BaseOptions(
