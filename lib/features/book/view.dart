@@ -16,36 +16,28 @@ class BookView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
+    return BlocBuilder<BookScreenBloc, BookScreenState>(
+      builder: (context, state) {
+        if (state is BookScreenErrorState) {
+          return ErrorScreen(
+            titleText: 'Книга',
+            text: state.message,
+            retray: () =>
+                context.read<BookScreenBloc>().add(LoadingBookEvent(id)),
+          );
+        }
 
-    return SimpleScreen(
-      titleText: 'Книга',
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: BlocBuilder<BookScreenBloc, BookScreenState>(
-              builder: (context, state) {
-                if (state is BookScreenErrorState) {
-                  return Center(
-                    child: Text(state.message,
-                        style: textTheme.bodyMedium
-                            ?.copyWith(color: colorScheme.error)),
-                  );
-                }
+        if (state is BookScreenLoadedState) {
+          final model = state.model;
 
-                if (state is BookScreenLoadedState) {
-                  final model = state.model;
+          return SimpleScreen(
+            titleText: 'Книга',
+            body: Expanded(child: BookWidget(model)),
+          );
+        }
 
-                  return BookWidget(model);
-                }
-
-                return const CircularProgressIndicator.adaptive();
-              },
-            ),
-          ),
-        ],
-      ),
+        return const LoadingScreen(titleText: 'Книга');
+      },
     );
   }
 }

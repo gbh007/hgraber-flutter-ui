@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hgraber_ui/features/book/book_screen.dart';
+import 'package:hgraber_ui/global/global.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
 
@@ -28,20 +29,45 @@ final GoRouter _router = GoRouter(
 class HGraberApp extends StatelessWidget {
   const HGraberApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => HGraberHTTPClient(baseUrl: baseUrl) as HGraberClient,
-      child: MaterialApp.router(
-        // supportedLocales: [Locale('ru', 'RU')],
-        debugShowCheckedModeBanner: false,
-        title: 'HGraber UI',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-          useMaterial3: true,
-        ),
-        routerConfig: _router,
+    return BlocProvider(
+      create: (_) => GlobalBloc()
+        ..add(LoadedGlobalEvent(GlobalModel(baseUrl: baseUrl, scale: 1.0))),
+      child: BlocBuilder<GlobalBloc, GlobalState>(
+        builder: (context, state) {
+          if (state is GlobalLoadingState) {
+            return CircularProgressIndicator.adaptive();
+          }
+
+          if (state is GlobalLoadedState) {
+            return RepositoryProvider(
+              create: (context) {
+                HGraberClient client =
+                    HGraberHTTPClient(baseUrl: state.model.baseUrl);
+                return client;
+              },
+              child: MaterialApp.router(
+                // supportedLocales: [Locale('ru', 'RU')],
+                debugShowCheckedModeBanner: false,
+                title: 'HGraber UI',
+                theme: ThemeData(
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+                  useMaterial3: true,
+                ),
+                routerConfig: _router,
+                builder: (context, child) {
+                  return MediaQuery(
+                      data: MediaQuery.of(context).copyWith(
+                          textScaler: TextScaler.linear(state.model.scale)),
+                      child: child ?? SizedBox.shrink());
+                },
+              ),
+            );
+          }
+
+          return CircularProgressIndicator.adaptive();
+        },
       ),
     );
   }

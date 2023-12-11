@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hgraber_ui/widgets/navigation.dart';
 
 import 'wigets.dart';
@@ -11,32 +10,29 @@ class MainPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
+    return BlocBuilder<MainPageBloc, MainPageState>(
+      builder: (context, state) {
+        if (state is MainPageErrorState) {
+          return ErrorScreen(
+            titleText: 'Главная',
+            text: state.message,
+            retray: () => context.read<MainPageBloc>().add(FetchMainEvent()),
+          );
+        }
 
-    return SimpleScreen(
-      titleText: 'Главная',
-      body: Center(
-        child: BlocBuilder<MainPageBloc, MainPageState>(
-          builder: (context, state) {
-            if (state is MainPageErrorState) {
-              return Center(
-                child: Text(state.message,
-                    style: textTheme.bodyMedium
-                        ?.copyWith(color: colorScheme.error)),
-              );
-            }
+        if (state is MainPageLoadedState) {
+          final model = state.model;
 
-            if (state is MainPageLoadedState) {
-              final model = state.model;
+          List<Widget> widgets = [MainInfoWidget(model)];
 
-              List<Widget> widgets = [MainInfoWidget(model)];
+          if (model.monitor != null && model.monitor!.workers != null) {
+            widgets.add(WorkersWidget(model.monitor!.workers!));
+          }
 
-              if (model.monitor != null && model.monitor!.workers != null) {
-                widgets.add(WorkersWidget(model.monitor!.workers!));
-              }
-
-              return Padding(
+          return SimpleScreen(
+            titleText: 'Главная',
+            body: Center(
+              child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Center(
                   child: Column(
@@ -44,23 +40,24 @@ class MainPageView extends StatelessWidget {
                     children: widgets,
                   ),
                 ),
-              );
-            }
+              ),
+            ),
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  child: const Icon(Icons.refresh),
+                  onPressed: () =>
+                      context.read<MainPageBloc>().add(FetchMainEvent()),
+                ),
+              ],
+            ),
+          );
+        }
 
-            return const CircularProgressIndicator.adaptive();
-          },
-        ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            child: const Icon(Icons.refresh),
-            onPressed: () => context.read<MainPageBloc>().add(FetchMainEvent()),
-          ),
-        ],
-      ),
+        return const LoadingScreen(titleText: 'Главная');
+      },
     );
   }
 }
