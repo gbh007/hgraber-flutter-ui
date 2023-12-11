@@ -87,6 +87,40 @@ class BookInfo {
     required this.groups,
   });
 
+  List<(String, List<String>)> attributes() {
+    var attrs = List<(String, List<String>)>.empty(growable: true);
+
+    if (tags != null) {
+      attrs.add(('Теги', tags!));
+    }
+
+    if (authors != null) {
+      attrs.add(('Авторы', authors!));
+    }
+
+    if (characters != null) {
+      attrs.add(('Персонажи', characters!));
+    }
+
+    if (languages != null) {
+      attrs.add(('Языки', languages!));
+    }
+
+    if (categories != null) {
+      attrs.add(('Категории', categories!));
+    }
+
+    if (parodies != null) {
+      attrs.add(('Пародии', parodies!));
+    }
+
+    if (groups != null) {
+      attrs.add(('Группы', groups!));
+    }
+
+    return attrs;
+  }
+
   factory BookInfo.fromJson(Map<String, dynamic> json) =>
       _$BookInfoFromJson(json);
   Map<String, dynamic> toJson() => _$BookInfoToJson(this);

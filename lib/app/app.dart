@@ -13,15 +13,14 @@ final GoRouter _router = GoRouter(
       path: '/',
       name: 'home',
       builder: (context, state) => MainScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: "book/:id",
-          builder: (context, state) {
-            int id = int.parse(state.pathParameters['id']!);
-            return BookScreen(id);
-          },
-        ),
-      ],
+      // routes: <RouteBase>[],
+    ),
+    GoRoute(
+      path: "/book/:id",
+      builder: (context, state) {
+        int id = int.parse(state.pathParameters['id']!);
+        return BookScreen(id);
+      },
     ),
   ],
 );
@@ -33,8 +32,7 @@ class HGraberApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) =>
-          HGraberHTTPClient(baseUrl: baseUrl) as HGraberClient,
+      create: (context) => HGraberHTTPClient(baseUrl: baseUrl) as HGraberClient,
       child: MaterialApp.router(
         // supportedLocales: [Locale('ru', 'RU')],
         debugShowCheckedModeBanner: false,

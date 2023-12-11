@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hgraber_ui/widgets/navigation.dart';
 
 import 'wigets.dart';
 import 'bloc.dart';
@@ -13,7 +14,8 @@ class MainPageView extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
+    return SimpleScreen(
+      titleText: 'Главная',
       body: Center(
         child: BlocBuilder<MainPageBloc, MainPageState>(
           builder: (context, state) {
@@ -54,14 +56,8 @@ class MainPageView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
-            heroTag: "1",
             child: const Icon(Icons.refresh),
             onPressed: () => context.read<MainPageBloc>().add(FetchMainEvent()),
-          ),
-          FloatingActionButton(
-            heroTag: "2",
-            child: const Icon(Icons.book),
-            onPressed: () => context.go("/book/3"),
           ),
         ],
       ),
