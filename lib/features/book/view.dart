@@ -32,7 +32,7 @@ class BookView extends StatelessWidget {
 
           return SimpleScreen(
             titleText: 'Книга',
-            body: Expanded(child: BookWidget(model)),
+            body: BookWidget(model),
           );
         }
 

@@ -1,18 +1,27 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+
 import 'repository.dart';
 
-
 class HGraberHTTPClient implements HGraberClient {
-  late final DioForNative _client;
+  late final Dio _client;
 
   HGraberHTTPClient({
     required String baseUrl,
   }) {
-    _client = DioForNative(BaseOptions(
-      baseUrl: baseUrl,
-      contentType: Headers.jsonContentType,
-    ));
+    if (kIsWeb) {
+      _client = Dio(BaseOptions(
+        baseUrl: baseUrl,
+        contentType: Headers.jsonContentType,
+      ));
+    } else {
+      _client = DioForNative(BaseOptions(
+        baseUrl: baseUrl,
+        contentType: Headers.jsonContentType,
+      ));
+    }
   }
 
   Future<MainPageData> mainInfo() {

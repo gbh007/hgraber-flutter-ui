@@ -24,7 +24,6 @@ class BookWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            // FIXME: поправить рендеринг на странице книги.
             flex: 1,
             child: BookImagePreviewWidget(firstUrl),
           ),

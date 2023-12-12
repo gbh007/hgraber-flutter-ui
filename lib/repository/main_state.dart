@@ -20,8 +20,8 @@ class Worker {
   });
 
   factory Worker.fromJson(Map<String, dynamic> json) =>
-      _$WorkerDataFromJson(json);
-  Map<String, dynamic> toJson() => _$WorkerDataToJson(this);
+      _$WorkerFromJson(json);
+  Map<String, dynamic> toJson() => _$WorkerToJson(this);
 }
 
 @JsonSerializable()
@@ -33,8 +33,8 @@ class Monitor {
   });
 
   factory Monitor.fromJson(Map<String, dynamic> json) =>
-      _$MonitorDataFromJson(json);
-  Map<String, dynamic> toJson() => _$MonitorDataToJson(this);
+      _$MonitorFromJson(json);
+  Map<String, dynamic> toJson() => _$MonitorToJson(this);
 }
 
 @JsonSerializable()
@@ -59,6 +59,6 @@ class MainPageData {
   });
 
   factory MainPageData.fromJson(Map<String, dynamic> json) =>
-      _$MainInfoDataFromJson(json);
-  Map<String, dynamic> toJson() => _$MainInfoDataToJson(this);
+      _$MainPageDataFromJson(json);
+  Map<String, dynamic> toJson() => _$MainPageDataToJson(this);
 }

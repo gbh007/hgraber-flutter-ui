@@ -6,31 +6,31 @@ part of 'main_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Worker _$WorkerDataFromJson(Map<String, dynamic> json) => Worker(
+Worker _$WorkerFromJson(Map<String, dynamic> json) => Worker(
       name: json['name'] as String,
       inQueue: json['in_queue'] as int? ?? 0,
       inWork: json['in_work'] as int? ?? 0,
       runners: json['runners'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$WorkerDataToJson(Worker instance) => <String, dynamic>{
+Map<String, dynamic> _$WorkerToJson(Worker instance) => <String, dynamic>{
       'name': instance.name,
       'in_queue': instance.inQueue,
       'in_work': instance.inWork,
       'runners': instance.runners,
     };
 
-Monitor _$MonitorDataFromJson(Map<String, dynamic> json) => Monitor(
+Monitor _$MonitorFromJson(Map<String, dynamic> json) => Monitor(
       workers: (json['workers'] as List<dynamic>?)
           ?.map((e) => Worker.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$MonitorDataToJson(Monitor instance) => <String, dynamic>{
+Map<String, dynamic> _$MonitorToJson(Monitor instance) => <String, dynamic>{
       'workers': instance.workers,
     };
 
-MainPageData _$MainInfoDataFromJson(Map<String, dynamic> json) => MainPageData(
+MainPageData _$MainPageDataFromJson(Map<String, dynamic> json) => MainPageData(
       monitor: json['monitor'] == null
           ? null
           : Monitor.fromJson(json['monitor'] as Map<String, dynamic>),
@@ -40,7 +40,7 @@ MainPageData _$MainInfoDataFromJson(Map<String, dynamic> json) => MainPageData(
       pageCount: json['page_count'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$MainInfoDataToJson(MainPageData instance) =>
+Map<String, dynamic> _$MainPageDataToJson(MainPageData instance) =>
     <String, dynamic>{
       'monitor': instance.monitor,
       'count': instance.count,

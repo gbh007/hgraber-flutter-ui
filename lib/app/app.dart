@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hgraber_ui/features/book/book_screen.dart';
-import 'package:hgraber_ui/global/global.dart';
+import 'package:hgraber_ui/common/global.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
 
@@ -33,7 +33,8 @@ class HGraberApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => GlobalBloc()
-        ..add(LoadedGlobalEvent(GlobalModel(baseUrl: baseUrl, scale: 1.0))),
+        ..add(LoadedGlobalEvent(
+            const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20))),
       child: BlocBuilder<GlobalBloc, GlobalState>(
         builder: (context, state) {
           if (state is GlobalLoadingState) {
