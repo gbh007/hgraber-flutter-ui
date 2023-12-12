@@ -6,11 +6,25 @@ import 'package:dio/io.dart';
 import 'repository.dart';
 
 class HGraberHTTPClient implements HGraberClient {
-  late final Dio _client;
+  late Dio _client;
 
   HGraberHTTPClient({
     required String baseUrl,
   }) {
+    if (kIsWeb) {
+      _client = Dio(BaseOptions(
+        baseUrl: baseUrl,
+        contentType: Headers.jsonContentType,
+      ));
+    } else {
+      _client = DioForNative(BaseOptions(
+        baseUrl: baseUrl,
+        contentType: Headers.jsonContentType,
+      ));
+    }
+  }
+
+  void updateBaseUrl(String baseUrl) {
     if (kIsWeb) {
       _client = Dio(BaseOptions(
         baseUrl: baseUrl,

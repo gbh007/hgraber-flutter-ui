@@ -22,7 +22,7 @@ class MainPageErrorState extends MainPageState {
 }
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
-  late final HGraberClient _client;
+  final HGraberClient _client;
 
   MainPageBloc(this._client) : super(MainPageLoadingState()) {
     on<FetchMainEvent>((event, emit) async {

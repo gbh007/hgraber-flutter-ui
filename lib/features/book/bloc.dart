@@ -25,7 +25,7 @@ class BookScreenErrorState extends BookScreenState {
 }
 
 class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
-  late final HGraberClient _client;
+  final HGraberClient _client;
 
   BookScreenBloc(this._client) : super(BookScreenLoadingState()) {
     on<LoadingBookEvent>((event, emit) async {

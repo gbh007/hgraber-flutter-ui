@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 
+import 'package:hgraber_ui/repository/repository.dart';
+
 import 'model.dart';
 
 sealed class GlobalEvent {}
 
 class LoadingGlobalEvent extends GlobalEvent {}
 
-class LoadedGlobalEvent extends GlobalEvent {
+class SetGlobalEvent extends GlobalEvent {
   final GlobalModel model;
 
-  LoadedGlobalEvent(this.model);
+  SetGlobalEvent(this.model);
 }
 
 sealed class GlobalState {}
@@ -29,9 +31,13 @@ class GlobalErrorState extends GlobalState {
 }
 
 class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
-  GlobalBloc() : super(GlobalLoadingState()) {
-    on<LoadedGlobalEvent>((event, emit) {
+  final HGraberClient _client;
+
+  GlobalBloc(this._client) : super(GlobalLoadingState()) {
+    on<SetGlobalEvent>((event, emit) {
       emit(GlobalLoadedState(event.model));
+      // FIXME: костыль
+      _client.updateBaseUrl(event.model.baseUrl);
     });
   }
 }
