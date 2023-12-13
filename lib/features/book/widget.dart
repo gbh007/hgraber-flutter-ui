@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
+import 'package:hgraber_ui/widgets/rate.dart';
 
 class BookWidget extends StatelessWidget {
   final Book model;
@@ -40,6 +41,7 @@ class BookWidget extends StatelessWidget {
                       color: colorScheme.primary,
                     ),
                   ),
+                  BookBarWidget(model),
                   ...model.info.attributes().map((e) => BookAttributesWidget(
                         name: e.$1,
                         attributes: e.$2,
@@ -120,6 +122,45 @@ class BookAttributesWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class BookBarWidget extends StatelessWidget {
+  final Book model;
+
+  const BookBarWidget(
+    this.model, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final loadedPagePercent = model.loadedPagePercent();
+    var created = model.created.toLocal();
+    String convertedDateTime =
+        "${created.day.toString().padLeft(2, '0')}.${created.month.toString().padLeft(2, '0')}.${created.year.toString()}, ${created.hour.toString().padLeft(2, '0')}:${created.minute.toString().padLeft(2, '0')}:${created.second.toString().padLeft(2, '0')}";
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text('#${model.id}'),
+        RateWidget(model.info.rate ?? 0),
+        Text('Страниц: ${model.pages.length}'),
+        Text(
+          'Загружено: $loadedPagePercent',
+          style: loadedPagePercent == 100.0
+              ? null
+              : textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onError,
+                  backgroundColor: colorScheme.onErrorContainer,
+                ),
+        ),
+        Text(convertedDateTime),
+      ],
     );
   }
 }

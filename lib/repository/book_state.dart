@@ -36,6 +36,21 @@ class Book {
     return out;
   }
 
+  double loadedPagePercent() {
+    if (pages.isEmpty) {
+      return 0;
+    }
+
+    int successCount = 0;
+    pages.forEach((element) {
+      if (element.success) {
+        successCount++;
+      }
+    });
+
+    return ((successCount * 10000) / pages.length).roundToDouble() / 100;
+  }
+
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
   Map<String, dynamic> toJson() => _$BookToJson(this);
 }
