@@ -5,9 +5,11 @@ import 'package:hgraber_ui/widgets/rate.dart';
 
 class BookWidget extends StatelessWidget {
   final Book model;
+  final List<Widget>? addons;
 
   const BookWidget(
     this.model, {
+    this.addons,
     super.key,
   });
 
@@ -45,7 +47,8 @@ class BookWidget extends StatelessWidget {
                   ...model.info.attributes().map((e) => BookAttributesWidget(
                         name: e.$1,
                         attributes: e.$2,
-                      ))
+                      )),
+                  Row(children: addons ?? List.empty()),
                 ],
               ),
             ),

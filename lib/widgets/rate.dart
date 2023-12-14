@@ -48,7 +48,6 @@ class RateWidget extends StatelessWidget {
       widgets.add(
         IconButton(
           onPressed: () => updateRate == null ? () : updateRate!(ratePos),
-          // FIXME: скейлинга нет
           icon: Icon(
             rate >= ratePos ? Icons.star : Icons.star_border,
             // На данный момент цвет выглядит не очень

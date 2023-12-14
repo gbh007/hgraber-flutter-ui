@@ -51,4 +51,11 @@ class HGraberHTTPClient implements HGraberClient {
       return Book.fromJson(body);
     });
   }
+
+  Future<List<Book>> bookList(int count, offset) {
+    return _client.post('/title/list',
+        data: {'count': count, 'offset': offset}).then((resp) {
+      return (resp.data as List).map((i) => Book.fromJson(i)).toList();
+    });
+  }
 }

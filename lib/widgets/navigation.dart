@@ -8,9 +8,8 @@ class _BottomNavigationBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouterState routeState = GoRouterState.of(context);
     final int index = switch (routeState.path ?? '/') {
-      '/books' => 1,
+      '/book' => 1,
       '/settings' => 2,
-      '/book/:id' => 3,
       _ => 0
     };
 
@@ -22,23 +21,17 @@ class _BottomNavigationBarWidget extends StatelessWidget {
           case 0:
             context.go("/");
           case 1:
-            context.go("/books");
+            context.go("/book");
           case 2:
             context.go("/settings");
-          case 3:
-            context.go("/book/1");
           default:
             context.go("/");
         }
       },
       items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Главная',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Главная'),
         BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Книги'),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Настройки'),
-        BottomNavigationBarItem(icon: Icon(Icons.auto_fix_high), label: 'Test'),
       ],
     );
   }

@@ -14,19 +14,24 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       name: 'home',
-      builder: (context, state) => MainScreen(),
+      builder: (context, state) => const MainScreen(),
       // routes: <RouteBase>[],
     ),
     GoRoute(
-      path: "/book/:id",
-      builder: (context, state) {
-        int id = int.parse(state.pathParameters['id']!);
-        return BookScreen(id);
-      },
-    ),
+        path: "/book",
+        builder: (context, state) => const BookListScreen(),
+        routes: [
+          GoRoute(
+            path: ":id",
+            builder: (context, state) {
+              int id = int.parse(state.pathParameters['id']!);
+              return BookScreen(id);
+            },
+          ),
+        ]),
     GoRoute(
       path: "/settings",
-      builder: (context, state) => SettingsScreen(),
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );
@@ -74,6 +79,8 @@ class _BLocLayout extends StatelessWidget {
               title: 'HGraber UI',
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+                iconTheme: IconThemeData.fallback()
+                    .copyWith(size: 24 * state.model.scale),
                 useMaterial3: true,
               ),
               routerConfig: _router,
