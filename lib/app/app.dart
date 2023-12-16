@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hgraber_ui/features/book/book_screen.dart';
 import 'package:hgraber_ui/common/global.dart';
+import 'package:hgraber_ui/features/reader/screen.dart';
 import 'package:hgraber_ui/features/settings/settings_screen.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
@@ -27,6 +28,24 @@ final GoRouter _router = GoRouter(
               int id = int.parse(state.pathParameters['id']!);
               return BookScreen(id);
             },
+            routes: [
+              GoRoute(
+                path: "read/:pageNumber",
+                builder: (context, state) {
+                  int id = int.parse(state.pathParameters['id']!);
+                  int? pageNumber;
+
+                  if (state.pathParameters['pageNumber'] != null) {
+                    pageNumber = int.parse(state.pathParameters['pageNumber']!);
+                  }
+
+                  return ReaderScreen(
+                    id,
+                    currentPage: pageNumber,
+                  );
+                },
+              ),
+            ],
           ),
         ]),
     GoRoute(

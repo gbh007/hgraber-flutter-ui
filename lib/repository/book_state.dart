@@ -72,7 +72,7 @@ class Page {
     this.rate,
   });
 
-  String getServerUrl(int bookID, pageNumber) {
+  String getServerUrl(int bookID, int pageNumber) {
     return '${baseUrl}file/$bookID/$pageNumber.$ext';
   }
 

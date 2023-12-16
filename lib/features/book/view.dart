@@ -39,7 +39,13 @@ class BookView extends StatelessWidget {
             body: Column(
               children: <Widget>[
                 BookWidget(model),
-                Expanded(child: BookImageListWidget(model)),
+                Expanded(
+                  child: BookImageListWidget(
+                    model,
+                    onTap: (pageNumber) =>
+                        context.go('/book/$id/read/$pageNumber'),
+                  ),
+                ),
               ],
             ),
           );
