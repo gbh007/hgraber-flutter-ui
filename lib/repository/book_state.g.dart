@@ -25,7 +25,10 @@ Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
     };
 
 Page _$PageFromJson(Map<String, dynamic> json) => Page(
+      bookID: json['title_id'] as int,
+      pageNumber: json['page_number'] as int,
       url: json['url'] as String,
+      urlToView: json['url_to_view'] as String,
       ext: json['ext'] as String,
       success: json['success'] as bool,
       loadedAt: DateTime.parse(json['loaded_at'] as String),
@@ -33,7 +36,10 @@ Page _$PageFromJson(Map<String, dynamic> json) => Page(
     );
 
 Map<String, dynamic> _$PageToJson(Page instance) => <String, dynamic>{
+      'title_id': instance.bookID,
+      'page_number': instance.pageNumber,
       'url': instance.url,
+      'url_to_view': instance.urlToView,
       'ext': instance.ext,
       'success': instance.success,
       'loaded_at': instance.loadedAt.toIso8601String(),

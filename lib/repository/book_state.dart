@@ -1,7 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'common.dart';
-
 part 'book_state.g.dart';
 
 @JsonSerializable()
@@ -19,22 +17,6 @@ class Book {
     required this.pages,
     required this.info,
   });
-
-  List<String> urlsToView() {
-    var out = List<String>.empty(growable: true);
-
-    for (var i = 0; i < pages.length; i++) {
-      var p = pages[i];
-
-      if (!p.success) {
-        continue;
-      }
-
-      out.add('${baseUrl}file/$id/${i + 1}.${p.ext}');
-    }
-
-    return out;
-  }
 
   double loadedPagePercent() {
     if (pages.isEmpty) {
@@ -57,7 +39,13 @@ class Book {
 
 @JsonSerializable()
 class Page {
+  @JsonKey(name: 'title_id')
+  final int bookID;
+  @JsonKey(name: 'page_number')
+  final int pageNumber;
   final String url;
+  @JsonKey(name: 'url_to_view')
+  final String urlToView;
   final String ext;
   final bool success;
   @JsonKey(name: 'loaded_at')
@@ -65,16 +53,15 @@ class Page {
   final int? rate;
 
   Page({
+    required this.bookID,
+    required this.pageNumber,
     required this.url,
+    required this.urlToView,
     required this.ext,
     required this.success,
     required this.loadedAt,
     this.rate,
   });
-
-  String getServerUrl(int bookID, int pageNumber) {
-    return '${baseUrl}file/$bookID/$pageNumber.$ext';
-  }
 
   factory Page.fromJson(Map<String, dynamic> json) => _$PageFromJson(json);
   Map<String, dynamic> toJson() => _$PageToJson(this);

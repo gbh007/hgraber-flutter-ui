@@ -19,7 +19,7 @@ class BookWidget extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final firstUrl = model.urlsToView().firstOrNull;
+    final firstPage = model.pages.firstOrNull;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -29,7 +29,9 @@ class BookWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: BookImagePreviewWidget(firstUrl),
+            child: BookImagePreviewWidget(
+              firstPage?.success ?? false ? firstPage?.urlToView : null,
+            ),
           ),
           Expanded(
             flex: 3,
@@ -106,7 +108,7 @@ class BookAttributesWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      margin: EdgeInsets.only(top: 3),
+      margin: const EdgeInsets.only(top: 3),
       child: Wrap(
         spacing: 5,
         children: <Widget>[
@@ -147,22 +149,31 @@ class BookBarWidget extends StatelessWidget {
     String convertedDateTime =
         "${created.day.toString().padLeft(2, '0')}.${created.month.toString().padLeft(2, '0')}.${created.year.toString()}, ${created.hour.toString().padLeft(2, '0')}:${created.minute.toString().padLeft(2, '0')}:${created.second.toString().padLeft(2, '0')}";
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text('#${model.id}'),
-        RateWidget(model.info.rate ?? 0),
-        Text('Страниц: ${model.pages.length}'),
-        Text(
-          'Загружено: $loadedPagePercent',
-          style: loadedPagePercent == 100.0
-              ? null
-              : textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onError,
-                  backgroundColor: colorScheme.onErrorContainer,
-                ),
+    return Wrap(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('#${model.id}'),
+            RateWidget(model.info.rate ?? 0),
+            Text('Страниц: ${model.pages.length}'),
+          ],
         ),
-        Text(convertedDateTime),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Загружено: $loadedPagePercent',
+              style: loadedPagePercent == 100.0
+                  ? null
+                  : textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onError,
+                      backgroundColor: colorScheme.onErrorContainer,
+                    ),
+            ),
+            Text(convertedDateTime),
+          ],
+        ),
       ],
     );
   }
@@ -181,12 +192,12 @@ class BookImageListWidget extends StatelessWidget {
 
     final images = List<Widget>.empty(growable: true);
 
-    model.pages.asMap().forEach((pageNumber, page) {
+    model.pages.forEach((page) {
       images.add(
         InkWell(
           onTap: () {
             if (onTap != null) {
-              onTap!(pageNumber + 1);
+              onTap!(page.pageNumber);
             }
           },
           child: Column(
@@ -195,9 +206,7 @@ class BookImageListWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: BookImagePreviewWidget(
-                  page.success
-                      ? page.getServerUrl(model.id, pageNumber + 1)
-                      : null,
+                  page.success ? page.urlToView : null,
                 ),
               ),
               Center(child: RateWidget(page.rate ?? 0)),

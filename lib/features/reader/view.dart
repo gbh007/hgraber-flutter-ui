@@ -70,10 +70,7 @@ class ReaderPageView extends StatelessWidget {
               ),
               Expanded(
                 child: ImageWidget(
-                  page?.getServerUrl(
-                    model.id,
-                    currentPage,
-                  ),
+                  page?.urlToView,
                 ),
               ),
             ],
