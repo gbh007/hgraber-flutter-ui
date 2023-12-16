@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,7 +36,12 @@ class BookView extends StatelessWidget {
 
           return SimpleScreen(
             titleText: 'Книга',
-            body: BookWidget(model),
+            body: Column(
+              children: <Widget>[
+                BookWidget(model),
+                Expanded(child: BookImageListWidget(model)),
+              ],
+            ),
           );
         }
 
@@ -53,7 +60,7 @@ class BookListView extends StatelessWidget {
       builder: (context, state) {
         if (state is BookListScreenErrorState) {
           return ErrorScreen(
-            titleText: 'Книга',
+            titleText: 'Книги',
             text: state.message,
             // FIXME: использовать глобальные данные
             retray: () => context
@@ -64,22 +71,37 @@ class BookListView extends StatelessWidget {
 
         if (state is BookListScreenLoadedState) {
           final model = state.model;
+          final bool isVertical =
+              MediaQuery.of(context).orientation == Orientation.portrait;
+          final int bookOnRow =
+              max(1, (MediaQuery.of(context).size.width / 800).floor());
+
+          final books = model
+              .map(
+                (book) => InkWell(
+                  onTap: () => context.go('/book/${book.id}'),
+                  child: BookWidget(
+                    book,
+                  ),
+                ),
+              )
+              .toList();
+
+          if (isVertical || bookOnRow == 1) {
+            return SimpleScreen(
+              titleText: 'Книги',
+              body: ListView(
+                children: books,
+              ),
+            );
+          }
 
           return SimpleScreen(
-            titleText: 'Книга',
-            body: ListView(
-              children: model
-                  .map(
-                    (book) => BookWidget(
-                      book,
-                      addons: <Widget>[
-                        TextButton(
-                            onPressed: () => context.go('/book/${book.id}'),
-                            child: const Text('Подробнее'))
-                      ],
-                    ),
-                  )
-                  .toList(),
+            titleText: 'Книги',
+            body: GridView.count(
+              crossAxisCount: bookOnRow,
+              childAspectRatio: 2,
+              children: books,
             ),
           );
         }

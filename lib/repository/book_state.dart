@@ -72,6 +72,10 @@ class Page {
     this.rate,
   });
 
+  String getServerUrl(int bookID, pageNumber) {
+    return '${baseUrl}file/$bookID/$pageNumber.$ext';
+  }
+
   factory Page.fromJson(Map<String, dynamic> json) => _$PageFromJson(json);
   Map<String, dynamic> toJson() => _$PageToJson(this);
 }

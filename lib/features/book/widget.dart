@@ -1,15 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
 import 'package:hgraber_ui/widgets/rate.dart';
 
 class BookWidget extends StatelessWidget {
   final Book model;
-  final List<Widget>? addons;
 
   const BookWidget(
     this.model, {
-    this.addons,
     super.key,
   });
 
@@ -48,7 +49,6 @@ class BookWidget extends StatelessWidget {
                         name: e.$1,
                         attributes: e.$2,
                       )),
-                  Row(children: addons ?? List.empty()),
                 ],
               ),
             ),
@@ -164,6 +164,55 @@ class BookBarWidget extends StatelessWidget {
         ),
         Text(convertedDateTime),
       ],
+    );
+  }
+}
+
+class BookImageListWidget extends StatelessWidget {
+  final Book model;
+  final void Function(int)? onTap;
+
+  const BookImageListWidget(this.model, {this.onTap, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final int bookOnRow =
+        max(1, (MediaQuery.of(context).size.width / 300).floor());
+
+    final images = List<Widget>.empty(growable: true);
+
+    model.pages.asMap().forEach((pageNumber, page) {
+      images.add(
+        InkWell(
+          onTap: () {
+            if (onTap != null) {
+              onTap!(pageNumber + 1);
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: BookImagePreviewWidget(
+                  page.success
+                      ? page.getServerUrl(model.id, pageNumber + 1)
+                      : null,
+                ),
+              ),
+              Center(child: RateWidget(page.rate ?? 0)),
+            ],
+          ),
+        ),
+      );
+    });
+
+    return GridView.count(
+      crossAxisCount: bookOnRow,
+      padding: const EdgeInsets.all(10),
+      mainAxisSpacing: 20,
+      crossAxisSpacing: 20,
+      children: images,
     );
   }
 }

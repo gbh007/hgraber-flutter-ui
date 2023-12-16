@@ -37,7 +37,7 @@ class BookListScreen extends StatelessWidget {
       // FIXME: проброс глобальных настроек.
       create: (_) =>
           BookListScreenBloc(client)..add(LoadingBookListEvent(12, 0)),
-      child: BookListView(),
+      child: const BookListView(),
     );
   }
 }
