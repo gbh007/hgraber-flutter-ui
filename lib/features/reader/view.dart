@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hgraber_ui/repository/repository.dart';
 
 import 'package:hgraber_ui/widgets/navigation.dart';
+import 'package:hgraber_ui/widgets/rate.dart';
 
 import 'bloc.dart';
 import 'widget.dart';
@@ -34,7 +35,14 @@ class ReaderView extends StatelessWidget {
         if (state is ReaderScreenLoadedState) {
           return BlocProvider(
             create: (_) => CurrentPageCubit(state.currentPage),
-            child: ReaderPageView(state.model),
+            child: ReaderPageView(
+              state.model,
+              updateRate: (page, rate) {
+                context
+                    .read<ReaderScreenBloc>()
+                    .add(RateBookPageEvent(id, page, rate));
+              },
+            ),
           );
         }
 
@@ -46,9 +54,11 @@ class ReaderView extends StatelessWidget {
 
 class ReaderPageView extends StatelessWidget {
   final Book model;
+  final void Function(int page, int rate)? updateRate;
 
   const ReaderPageView(
     this.model, {
+    this.updateRate,
     super.key,
   });
 
@@ -64,9 +74,24 @@ class ReaderPageView extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              Text(
-                'Страница $currentPage из ${model.pages.length}',
-                style: textTheme.bodyLarge,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Страница $currentPage из ${model.pages.length}',
+                    style: textTheme.bodyLarge,
+                  ),
+                  RateWidget(
+                    page?.rate ?? 0,
+                    updateRate: (rate) {
+                      if (page == null || updateRate == null) {
+                        return;
+                      }
+
+                      updateRate!(page.pageNumber, rate);
+                    },
+                  ),
+                ],
               ),
               Expanded(
                 child: ImageWidget(

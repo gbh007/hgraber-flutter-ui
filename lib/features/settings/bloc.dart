@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hgraber_ui/common/global.dart';
 
 sealed class SettingsEvent {}

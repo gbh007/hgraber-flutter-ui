@@ -28,7 +28,7 @@ abstract final class _RateColor {
 
 class RateWidget extends StatelessWidget {
   final int rate;
-  final Function(int)? updateRate;
+  final void Function(int rate)? updateRate;
 
   const RateWidget(
     this.rate, {

@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hgraber_ui/repository/repository.dart';
 
 sealed class MainPageEvent {}

@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
 
@@ -9,6 +9,12 @@ class LoadingBookEvent extends ReaderScreenEvent {
   final int currentPage;
 
   LoadingBookEvent(this.id, this.currentPage);
+}
+
+class RateBookPageEvent extends ReaderScreenEvent {
+  final int id, page, rate;
+
+  RateBookPageEvent(this.id, this.page, this.rate);
 }
 
 sealed class ReaderScreenState {}
@@ -40,6 +46,14 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         emit(ReaderScreenLoadedState(model, event.currentPage));
       } catch (e) {
         emit(ReaderScreenErrorState(e.toString(), event.currentPage));
+      }
+    });
+    on<RateBookPageEvent>((event, emit) async {
+      try {
+        await _client.pageRate(event.id, event.page, event.rate);
+        add(LoadingBookEvent(event.id, event.page));
+      } catch (e) {
+        emit(ReaderScreenErrorState(e.toString(), event.page));
       }
     });
   }

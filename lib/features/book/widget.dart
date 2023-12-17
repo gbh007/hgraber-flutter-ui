@@ -8,9 +8,11 @@ import 'package:hgraber_ui/widgets/rate.dart';
 
 class BookWidget extends StatelessWidget {
   final Book model;
+  final void Function(int)? updateRate;
 
   const BookWidget(
     this.model, {
+    this.updateRate,
     super.key,
   });
 
@@ -46,7 +48,7 @@ class BookWidget extends StatelessWidget {
                       color: colorScheme.primary,
                     ),
                   ),
-                  BookBarWidget(model),
+                  BookBarWidget(model, updateRate: updateRate),
                   ...model.info.attributes().map((e) => BookAttributesWidget(
                         name: e.$1,
                         attributes: e.$2,
@@ -133,9 +135,11 @@ class BookAttributesWidget extends StatelessWidget {
 
 class BookBarWidget extends StatelessWidget {
   final Book model;
+  final void Function(int)? updateRate;
 
   const BookBarWidget(
     this.model, {
+    this.updateRate,
     super.key,
   });
 
@@ -155,7 +159,7 @@ class BookBarWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('#${model.id}'),
-            RateWidget(model.info.rate ?? 0),
+            RateWidget(model.info.rate ?? 0, updateRate: updateRate),
             Text('Страниц: ${model.pages.length}'),
           ],
         ),
@@ -182,8 +186,14 @@ class BookBarWidget extends StatelessWidget {
 class BookImageListWidget extends StatelessWidget {
   final Book model;
   final void Function(int)? onTap;
+  final void Function(int page, int rate)? updateRate;
 
-  const BookImageListWidget(this.model, {this.onTap, super.key});
+  const BookImageListWidget(
+    this.model, {
+    this.onTap,
+    this.updateRate,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +219,15 @@ class BookImageListWidget extends StatelessWidget {
                   page.success ? page.urlToView : null,
                 ),
               ),
-              Center(child: RateWidget(page.rate ?? 0)),
+              Center(
+                  child: RateWidget(
+                page.rate ?? 0,
+                updateRate: (rate) {
+                  if (updateRate != null) {
+                    updateRate!(page.pageNumber, rate);
+                  }
+                },
+              )),
             ],
           ),
         ),

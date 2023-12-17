@@ -24,6 +24,7 @@ class HGraberHTTPClient implements HGraberClient {
     }
   }
 
+  @override
   void updateBaseUrl(String baseUrl) {
     if (kIsWeb) {
       _client = Dio(BaseOptions(
@@ -38,6 +39,7 @@ class HGraberHTTPClient implements HGraberClient {
     }
   }
 
+  @override
   Future<MainPageData> mainInfo() {
     return _client.get('/info').then((resp) {
       var body = resp.data as Map<String, dynamic>;
@@ -45,6 +47,7 @@ class HGraberHTTPClient implements HGraberClient {
     });
   }
 
+  @override
   Future<Book> bookInfo(int id) {
     return _client.post('/title/details', data: {'id': id}).then((resp) {
       var body = resp.data as Map<String, dynamic>;
@@ -52,10 +55,29 @@ class HGraberHTTPClient implements HGraberClient {
     });
   }
 
-  Future<List<Book>> bookList(int count, offset) {
+  @override
+  Future<List<Book>> bookList(int count, int offset) {
     return _client.post('/title/list',
         data: {'count': count, 'offset': offset}).then((resp) {
       return (resp.data as List).map((i) => Book.fromJson(i)).toList();
+    });
+  }
+
+  @override
+  Future<void> bookRate(int id, int rate) {
+    return _client
+        .post('/title/rate', data: {'id': id, 'rate': rate}).then((resp) {
+      return;
+    });
+  }
+
+  @override
+  Future<void> pageRate(int id, int pageNumber, int rate) {
+    return _client.post(
+      '/title/page/rate',
+      data: {'id': id, 'page': pageNumber, 'rate': rate},
+    ).then((resp) {
+      return;
     });
   }
 }

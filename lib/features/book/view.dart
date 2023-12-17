@@ -38,10 +38,20 @@ class BookView extends StatelessWidget {
             titleText: 'Книга',
             body: Column(
               children: <Widget>[
-                BookWidget(model),
+                BookWidget(
+                  model,
+                  updateRate: (rate) {
+                    context.read<BookScreenBloc>().add(RateBookEvent(id, rate));
+                  },
+                ),
                 Expanded(
                   child: BookImageListWidget(
                     model,
+                    updateRate: (page, rate) {
+                      context
+                          .read<BookScreenBloc>()
+                          .add(RateBookPageEvent(id, page, rate));
+                    },
                     onTap: (pageNumber) =>
                         context.go('/book/$id/read/$pageNumber'),
                   ),
@@ -68,10 +78,9 @@ class BookListView extends StatelessWidget {
           return ErrorScreen(
             titleText: 'Книги',
             text: state.message,
-            // FIXME: использовать глобальные данные
             retray: () => context
                 .read<BookListScreenBloc>()
-                .add(LoadingBookListEvent(12, 0)),
+                .add(LoadingBookListEvent(state.count, state.offset)),
           );
         }
 
@@ -88,6 +97,10 @@ class BookListView extends StatelessWidget {
                   onTap: () => context.go('/book/${book.id}'),
                   child: BookWidget(
                     book,
+                    updateRate: (rate) {
+                      context.read<BookListScreenBloc>().add(RateBookListEvent(
+                          state.count, state.offset, book.id, rate));
+                    },
                   ),
                 ),
               )
