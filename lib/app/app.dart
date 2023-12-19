@@ -83,37 +83,31 @@ class _BLocLayout extends StatelessWidget {
     final client = RepositoryProvider.of<HGraberClient>(context);
     return BlocProvider(
       create: (_) => GlobalBloc(client)
-        ..add(SetGlobalEvent(
-            const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20))),
-      child: BlocBuilder<GlobalBloc, GlobalState>(
+        ..updateModel(
+            // FIXME: почему-то криво сеттится из конструктора, поэтому приходиться вызывать обновление
+            const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20)),
+      lazy: false,
+      child: BlocBuilder<GlobalBloc, GlobalModel>(
         builder: (context, state) {
-          if (state is GlobalLoadingState) {
-            return const CircularProgressIndicator.adaptive();
-          }
-
-          if (state is GlobalLoadedState) {
-            return MaterialApp.router(
-              // supportedLocales: [Locale('ru', 'RU')],
-              debugShowCheckedModeBanner: false,
-              title: 'HGraber UI',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-                iconTheme: IconThemeData.fallback()
-                    .copyWith(size: 24 * state.model.scale),
-                useMaterial3: true,
-              ),
-              routerConfig: _router,
-              builder: (context, child) {
-                return MediaQuery(
-                    data: MediaQuery.of(context).copyWith(
-                      textScaler: TextScaler.linear(state.model.scale),
-                    ),
-                    child: child ?? SizedBox.shrink());
-              },
-            );
-          }
-
-          return const CircularProgressIndicator.adaptive();
+          return MaterialApp.router(
+            // supportedLocales: [Locale('ru', 'RU')],
+            debugShowCheckedModeBanner: false,
+            title: 'HGraber UI',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+              iconTheme:
+                  IconThemeData.fallback().copyWith(size: 24 * state.scale),
+              useMaterial3: true,
+            ),
+            routerConfig: _router,
+            builder: (context, child) {
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: TextScaler.linear(state.scale),
+                  ),
+                  child: child ?? SizedBox.shrink());
+            },
+          );
         },
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:hgraber_ui/common/global.dart';
 import 'package:hgraber_ui/repository/repository.dart';
 
 import 'view.dart';
@@ -33,11 +34,12 @@ class BookListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final client = RepositoryProvider.of<HGraberClient>(context);
 
-    return BlocProvider(
-      // FIXME: проброс глобальных настроек.
-      create: (_) =>
-          BookListScreenBloc(client)..add(LoadingBookListEvent(12, 0)),
-      child: const BookListView(),
-    );
+    return BlocBuilder<GlobalBloc, GlobalModel>(builder: (context, state) {
+      return BlocProvider(
+        create: (_) => BookListScreenBloc(client)
+          ..add(LoadingBookListEvent(state.bookOnPage, 0)),
+        child: const BookListView(),
+      );
+    });
   }
 }

@@ -106,21 +106,49 @@ class BookListView extends StatelessWidget {
               )
               .toList();
 
+          final int pageCount =
+              (state.totalBookCount.toDouble() / state.count.toDouble()).ceil();
+          final List<Widget> pages = List<Widget>.empty(growable: true);
+
+          for (var i = 0; i < pageCount; i++) {
+            pages.add(TextButton(
+                onPressed: () {
+                  context
+                      .read<BookListScreenBloc>()
+                      .add(LoadingBookListEvent(state.count, state.count * i));
+                },
+                child: Text('${i + 1}')));
+          }
+
           if (isVertical || bookOnRow == 1) {
             return SimpleScreen(
               titleText: 'Книги',
-              body: ListView(
-                children: books,
+              body: Column(
+                children: [
+                  Wrap(children: pages),
+                  Expanded(
+                    child: ListView(
+                      children: books,
+                    ),
+                  ),
+                ],
               ),
             );
           }
 
           return SimpleScreen(
             titleText: 'Книги',
-            body: GridView.count(
-              crossAxisCount: bookOnRow,
-              childAspectRatio: 2,
-              children: books,
+            body: Column(
+              children: [
+                Wrap(children: pages),
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: bookOnRow,
+                    childAspectRatio: 2,
+                    children: books,
+                  ),
+                ),
+              ],
             ),
           );
         }

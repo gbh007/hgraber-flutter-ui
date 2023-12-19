@@ -22,9 +22,11 @@ class BookListScreenLoadingState extends BookListScreenState {}
 
 class BookListScreenLoadedState extends BookListScreenState {
   final List<Book> model;
+  final int totalBookCount;
   final int count, offset;
 
-  BookListScreenLoadedState(this.model, this.count, this.offset);
+  BookListScreenLoadedState(
+      this.model, this.count, this.offset, this.totalBookCount);
 }
 
 class BookListScreenErrorState extends BookListScreenState {
@@ -43,7 +45,10 @@ class BookListScreenBloc
       emit(BookListScreenLoadingState());
       try {
         final model = await _client.bookList(event.count, event.offset);
-        emit(BookListScreenLoadedState(model, event.count, event.offset));
+        // Из-за особенностей API, получение количества книг приходится делать отдельно.
+        final info = await _client.mainInfo();
+        emit(BookListScreenLoadedState(
+            model, event.count, event.offset, info.count));
       } catch (e) {
         emit(BookListScreenErrorState(e.toString(), event.count, event.offset));
       }
