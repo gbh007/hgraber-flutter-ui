@@ -5,13 +5,13 @@ import 'package:hgraber_ui/repository/repository.dart';
 import 'model.dart';
 
 class GlobalBloc extends Cubit<GlobalModel> {
-  final HGraberClient _client;
+  final Repository _repository;
 
-  GlobalBloc(this._client)
+  GlobalBloc(this._repository)
       : super(const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20));
 
   void updateModel(GlobalModel data) {
     emit(data);
-    _client.updateBaseUrl(data.baseUrl);
+    _repository.updateBaseUrl(data.baseUrl);
   }
 }

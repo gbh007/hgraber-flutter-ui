@@ -69,8 +69,7 @@ class _RepositoryLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (_) {
-        HGraberClient client = HGraberHTTPClient(baseUrl: '');
-        return client;
+        return Repository(baseUrl);
       },
       child: _BLocLayout(),
     );
@@ -80,12 +79,9 @@ class _RepositoryLayout extends StatelessWidget {
 class _BLocLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final client = RepositoryProvider.of<HGraberClient>(context);
+    final client = RepositoryProvider.of<Repository>(context);
     return BlocProvider(
-      create: (_) => GlobalBloc(client)
-        ..updateModel(
-            // FIXME: почему-то криво сеттится из конструктора, поэтому приходиться вызывать обновление
-            const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20)),
+      create: (_) => GlobalBloc(client),
       lazy: false,
       child: BlocBuilder<GlobalBloc, GlobalModel>(
         builder: (context, state) {

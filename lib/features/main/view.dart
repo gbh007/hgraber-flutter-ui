@@ -25,8 +25,8 @@ class MainPageView extends StatelessWidget {
 
           List<Widget> widgets = [MainInfoWidget(model)];
 
-          if (model.monitor != null && model.monitor!.workers != null) {
-            widgets.add(WorkersWidget(model.monitor!.workers!));
+          if (model.workers != null && model.workers!.isNotEmpty) {
+            widgets.add(WorkersWidget(model.workers!));
           }
 
           return SimpleScreen(

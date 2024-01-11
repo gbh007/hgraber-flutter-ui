@@ -32,7 +32,7 @@ class WorkersWidget extends StatelessWidget {
 }
 
 class MainInfoWidget extends StatelessWidget {
-  final MainPageData model;
+  final Dashboard model;
 
   const MainInfoWidget(this.model, {super.key});
 

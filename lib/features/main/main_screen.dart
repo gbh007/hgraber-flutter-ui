@@ -12,7 +12,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final client = RepositoryProvider.of<HGraberClient>(context);
+    final client = RepositoryProvider.of<Repository>(context);
 
     return BlocProvider(
       create: (_) => MainPageBloc(client)..add(FetchMainEvent()),

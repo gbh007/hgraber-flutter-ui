@@ -1,16 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:hgraber_ui/repository/repository.dart';
 import 'package:hgraber_ui/widgets/rate.dart';
 
-class BookWidget extends StatelessWidget {
-  final Book model;
+class BookDetailsWidget extends StatelessWidget {
+  final BookDetailInfo model;
   final void Function(int)? updateRate;
 
-  const BookWidget(
+  const BookDetailsWidget(
     this.model, {
     this.updateRate,
     super.key,
@@ -21,8 +20,6 @@ class BookWidget extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final firstPage = model.pages.firstOrNull;
-
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -31,9 +28,7 @@ class BookWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: BookImagePreviewWidget(
-              firstPage?.success ?? false ? firstPage?.urlToView : null,
-            ),
+            child: BookImagePreviewWidget(model.previewUrl),
           ),
           Expanded(
             flex: 3,
@@ -43,16 +38,88 @@ class BookWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    model.info.name ?? '',
+                    model.name,
                     style: textTheme.headlineMedium?.copyWith(
                       color: colorScheme.primary,
                     ),
                   ),
-                  BookBarWidget(model, updateRate: updateRate),
-                  ...model.info.attributes().map((e) => BookAttributesWidget(
-                        name: e.$1,
-                        attributes: e.$2,
-                      )),
+                  BookBarWidget(
+                    id: model.id,
+                    created: model.created,
+                    parsedName: model.parsedName,
+                    name: model.name,
+                    parsedPage: model.parsedPage,
+                    pageCount: model.pageCount,
+                    pageLoadedPercent: model.pageLoadedPercent,
+                    rating: model.rate,
+                    updateRating: updateRate,
+                  ),
+                  BookAttributesWidget(
+                      // FIXME: не отрисовывать если пустой
+                      attributes: model.attributes ?? List.empty())
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BookShortInfoWidget extends StatelessWidget {
+  final BookShortInfo model;
+  final void Function(int)? updateRate;
+
+  const BookShortInfoWidget(
+    this.model, {
+    this.updateRate,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: BookImagePreviewWidget(model.previewUrl),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    model.name,
+                    style: textTheme.headlineMedium?.copyWith(
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                  BookBarWidget(
+                    id: model.id,
+                    created: model.created,
+                    parsedName: model.parsedName,
+                    name: model.name,
+                    parsedPage: model.parsedPage,
+                    pageCount: model.pageCount,
+                    pageLoadedPercent: model.pageLoadedPercent,
+                    rating: model.rate,
+                    updateRating: updateRate,
+                  ),
+                  BookAttributeWidget(
+                      name: 'Тэги',
+                      attributes: model.tags ??
+                          List.empty()) // FIXME: не отрисовывать если пустой
                 ],
               ),
             ),
@@ -95,10 +162,30 @@ class BookImagePreviewWidget extends StatelessWidget {
 }
 
 class BookAttributesWidget extends StatelessWidget {
+  final List<BookDetailAttributeInfo> attributes;
+
+  const BookAttributesWidget({
+    required this.attributes,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: attributes
+          .map((attr) =>
+              BookAttributeWidget(name: attr.name, attributes: attr.values))
+          .toList(),
+    );
+  }
+}
+
+class BookAttributeWidget extends StatelessWidget {
   final String name;
   final List<String> attributes;
 
-  const BookAttributesWidget({
+  const BookAttributeWidget({
     required this.name,
     required this.attributes,
     super.key,
@@ -134,13 +221,27 @@ class BookAttributesWidget extends StatelessWidget {
 }
 
 class BookBarWidget extends StatelessWidget {
-  final Book model;
-  final void Function(int)? updateRate;
+  final int id;
+  final DateTime created;
+  final bool parsedName;
+  final String name;
+  final bool parsedPage;
+  final int pageCount;
+  final double pageLoadedPercent;
+  final int rating;
+  final void Function(int)? updateRating;
 
-  const BookBarWidget(
-    this.model, {
-    this.updateRate,
+  const BookBarWidget({
+    this.updateRating,
     super.key,
+    required this.id,
+    required this.created,
+    required this.parsedName,
+    required this.name,
+    required this.parsedPage,
+    required this.pageCount,
+    required this.pageLoadedPercent,
+    required this.rating,
   });
 
   @override
@@ -148,27 +249,26 @@ class BookBarWidget extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final loadedPagePercent = model.loadedPagePercent();
-    var created = model.created.toLocal();
+    var createdInLocal = created.toLocal();
     String convertedDateTime =
-        "${created.day.toString().padLeft(2, '0')}.${created.month.toString().padLeft(2, '0')}.${created.year.toString()}, ${created.hour.toString().padLeft(2, '0')}:${created.minute.toString().padLeft(2, '0')}:${created.second.toString().padLeft(2, '0')}";
+        "${createdInLocal.day.toString().padLeft(2, '0')}.${createdInLocal.month.toString().padLeft(2, '0')}.${createdInLocal.year.toString()}, ${createdInLocal.hour.toString().padLeft(2, '0')}:${createdInLocal.minute.toString().padLeft(2, '0')}:${createdInLocal.second.toString().padLeft(2, '0')}";
 
     return Wrap(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('#${model.id}'),
-            RateWidget(model.info.rate ?? 0, updateRate: updateRate),
-            Text('Страниц: ${model.pages.length}'),
+            Text('#$id'),
+            RateWidget(rating, updateRate: updateRating),
+            Text('Страниц: $pageCount'),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              'Загружено: $loadedPagePercent',
-              style: loadedPagePercent == 100.0
+              'Загружено: $pageLoadedPercent',
+              style: pageLoadedPercent == 100.0
                   ? null
                   : textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onError,
@@ -184,7 +284,7 @@ class BookBarWidget extends StatelessWidget {
 }
 
 class BookImageListWidget extends StatelessWidget {
-  final Book model;
+  final List<BookDetailPagePreview> model;
   final void Function(int)? onTap;
   final void Function(int page, int rate)? updateRate;
 
@@ -202,7 +302,7 @@ class BookImageListWidget extends StatelessWidget {
 
     final images = List<Widget>.empty(growable: true);
 
-    model.pages.forEach((page) {
+    model.forEach((page) {
       images.add(
         InkWell(
           onTap: () {
@@ -215,13 +315,11 @@ class BookImageListWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: BookImagePreviewWidget(
-                  page.success ? page.urlToView : null,
-                ),
+                child: BookImagePreviewWidget(page.previewUrl),
               ),
               Center(
                   child: RateWidget(
-                page.rate ?? 0,
+                page.rate,
                 updateRate: (rate) {
                   if (updateRate != null) {
                     updateRate!(page.pageNumber, rate);

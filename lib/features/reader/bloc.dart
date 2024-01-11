@@ -22,7 +22,7 @@ sealed class ReaderScreenState {}
 class ReaderScreenLoadingState extends ReaderScreenState {}
 
 class ReaderScreenLoadedState extends ReaderScreenState {
-  final Book model;
+  final BookDetailInfo model;
   final int currentPage;
 
   ReaderScreenLoadedState(this.model, this.currentPage);
@@ -36,13 +36,13 @@ class ReaderScreenErrorState extends ReaderScreenState {
 }
 
 class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
-  final HGraberClient _client;
+  final Repository _client;
 
   ReaderScreenBloc(this._client) : super(ReaderScreenLoadingState()) {
     on<LoadingBookEvent>((event, emit) async {
       emit(ReaderScreenLoadingState());
       try {
-        final model = await _client.bookInfo(event.id);
+        final model = await _client.book(event.id);
         emit(ReaderScreenLoadedState(model, event.currentPage));
       } catch (e) {
         emit(ReaderScreenErrorState(e.toString(), event.currentPage));
@@ -50,7 +50,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     });
     on<RateBookPageEvent>((event, emit) async {
       try {
-        await _client.pageRate(event.id, event.page, event.rate);
+        await _client.updatePageRating(event.id, event.page, event.rate);
         add(LoadingBookEvent(event.id, event.page));
       } catch (e) {
         emit(ReaderScreenErrorState(e.toString(), event.page));

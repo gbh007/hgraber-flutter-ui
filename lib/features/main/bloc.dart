@@ -11,7 +11,7 @@ sealed class MainPageState {}
 class MainPageLoadingState extends MainPageState {}
 
 class MainPageLoadedState extends MainPageState {
-  final MainPageData model;
+  final Dashboard model;
 
   MainPageLoadedState(this.model);
 }
@@ -23,13 +23,13 @@ class MainPageErrorState extends MainPageState {
 }
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
-  final HGraberClient _client;
+  final Repository _repository;
 
-  MainPageBloc(this._client) : super(MainPageLoadingState()) {
+  MainPageBloc(this._repository) : super(MainPageLoadingState()) {
     on<FetchMainEvent>((event, emit) async {
       emit(MainPageLoadingState());
       try {
-        final model = await _client.mainInfo();
+        final model = await _repository.info();
         emit(MainPageLoadedState(model));
       } catch (e) {
         emit(MainPageErrorState(e.toString()));

@@ -53,7 +53,7 @@ class ReaderView extends StatelessWidget {
 }
 
 class ReaderPageView extends StatelessWidget {
-  final Book model;
+  final BookDetailInfo model;
   final void Function(int page, int rate)? updateRate;
 
   const ReaderPageView(
@@ -65,12 +65,12 @@ class ReaderPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CurrentPageCubit, int>(builder: (context, state) {
-      final currentPage = max(1, min(state, model.pages.length));
-      final page = model.pages.elementAtOrNull(currentPage - 1);
+      final currentPage = max(1, min(state, model.pageCount));
+      final page = model.pages?.elementAtOrNull(currentPage - 1);
       final textTheme = Theme.of(context).textTheme;
 
       return SimpleScreen(
-        titleText: model.info.name ?? 'Читалка',
+        titleText: model.name,
         body: Center(
           child: Column(
             children: [
@@ -78,7 +78,7 @@ class ReaderPageView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Страница $currentPage из ${model.pages.length}',
+                    'Страница $currentPage из ${model.pageCount}',
                     style: textTheme.bodyLarge,
                   ),
                   RateWidget(
@@ -94,9 +94,7 @@ class ReaderPageView extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: ImageWidget(
-                  page?.urlToView,
-                ),
+                child: ImageWidget(page?.previewUrl),
               ),
             ],
           ),
@@ -121,7 +119,7 @@ class ReaderPageView extends StatelessWidget {
               child: FloatingActionButton(
                 heroTag: "forward",
                 onPressed: () {
-                  if (currentPage < model.pages.length) {
+                  if (currentPage < model.pageCount) {
                     context.read<CurrentPageCubit>().forward();
                   }
                 },

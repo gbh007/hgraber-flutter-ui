@@ -38,7 +38,7 @@ class BookView extends StatelessWidget {
             titleText: 'Книга',
             body: Column(
               children: <Widget>[
-                BookWidget(
+                BookDetailsWidget(
                   model,
                   updateRate: (rate) {
                     context.read<BookScreenBloc>().add(RateBookEvent(id, rate));
@@ -46,7 +46,7 @@ class BookView extends StatelessWidget {
                 ),
                 Expanded(
                   child: BookImageListWidget(
-                    model,
+                    model.pages ?? List.empty(), // FIXME: вообще не рендерить
                     updateRate: (page, rate) {
                       context
                           .read<BookScreenBloc>()
@@ -80,7 +80,7 @@ class BookListView extends StatelessWidget {
             text: state.message,
             retray: () => context
                 .read<BookListScreenBloc>()
-                .add(LoadingBookListEvent(state.count, state.offset)),
+                .add(LoadingBookListEvent(state.count, state.page)),
           );
         }
 
@@ -95,30 +95,33 @@ class BookListView extends StatelessWidget {
               .map(
                 (book) => InkWell(
                   onTap: () => context.go('/book/${book.id}'),
-                  child: BookWidget(
+                  child: BookShortInfoWidget(
                     book,
                     updateRate: (rate) {
                       context.read<BookListScreenBloc>().add(RateBookListEvent(
-                          state.count, state.offset, book.id, rate));
+                          state.count, state.page, book.id, rate));
                     },
                   ),
                 ),
               )
               .toList();
 
-          final int pageCount =
-              (state.totalBookCount.toDouble() / state.count.toDouble()).ceil();
           final List<Widget> pages = List<Widget>.empty(growable: true);
 
-          for (var i = 0; i < pageCount; i++) {
+          state.pages.forEach((page) {
+            if (page.isSeparator) {
+              // FIXME: поддержать разделители и текущую страницу
+              return;
+            }
+
             pages.add(TextButton(
                 onPressed: () {
                   context
                       .read<BookListScreenBloc>()
-                      .add(LoadingBookListEvent(state.count, state.count * i));
+                      .add(LoadingBookListEvent(state.count, page.value));
                 },
-                child: Text('${i + 1}')));
-          }
+                child: Text('${page.value}')));
+          });
 
           if (isVertical || bookOnRow == 1) {
             return SimpleScreen(

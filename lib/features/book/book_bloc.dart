@@ -27,7 +27,7 @@ sealed class BookScreenState {}
 class BookScreenLoadingState extends BookScreenState {}
 
 class BookScreenLoadedState extends BookScreenState {
-  final Book model;
+  final BookDetailInfo model;
 
   BookScreenLoadedState(this.model);
 }
@@ -39,13 +39,13 @@ class BookScreenErrorState extends BookScreenState {
 }
 
 class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
-  final HGraberClient _client;
+  final Repository _repository;
 
-  BookScreenBloc(this._client) : super(BookScreenLoadingState()) {
+  BookScreenBloc(this._repository) : super(BookScreenLoadingState()) {
     on<LoadingBookEvent>((event, emit) async {
       emit(BookScreenLoadingState());
       try {
-        final model = await _client.bookInfo(event.id);
+        final model = await _repository.book(event.id);
         emit(BookScreenLoadedState(model));
       } catch (e) {
         emit(BookScreenErrorState(e.toString()));
@@ -53,7 +53,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
     });
     on<RateBookEvent>((event, emit) async {
       try {
-        await _client.bookRate(event.id, event.rate);
+        await _repository.updateBookRating(event.id, event.rate);
         add(LoadingBookEvent(event.id));
       } catch (e) {
         emit(BookScreenErrorState(
@@ -63,7 +63,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
     });
     on<RateBookPageEvent>((event, emit) async {
       try {
-        await _client.pageRate(event.id, event.pageNumber, event.rate);
+        await _repository.updatePageRating(event.id, event.pageNumber, event.rate);
         add(LoadingBookEvent(event.id));
       } catch (e) {
         emit(BookScreenErrorState(

@@ -5,15 +5,15 @@ import 'package:hgraber_ui/repository/repository.dart';
 sealed class BookListScreenEvent {}
 
 class LoadingBookListEvent extends BookListScreenEvent {
-  final int count, offset;
+  final int count, page;
 
-  LoadingBookListEvent(this.count, this.offset);
+  LoadingBookListEvent(this.count, this.page);
 }
 
 class RateBookListEvent extends BookListScreenEvent {
-  final int count, offset, bookID, rate;
+  final int count, page, bookID, rate;
 
-  RateBookListEvent(this.count, this.offset, this.bookID, this.rate);
+  RateBookListEvent(this.count, this.page, this.bookID, this.rate);
 }
 
 sealed class BookListScreenState {}
@@ -21,44 +21,50 @@ sealed class BookListScreenState {}
 class BookListScreenLoadingState extends BookListScreenState {}
 
 class BookListScreenLoadedState extends BookListScreenState {
-  final List<Book> model;
-  final int totalBookCount;
-  final int count, offset;
+  final List<BookShortInfo> model;
+  final List<PageForPagination> pages;
+  final int count, page;
 
   BookListScreenLoadedState(
-      this.model, this.count, this.offset, this.totalBookCount);
+    this.model,
+    this.count,
+    this.page,
+    this.pages,
+  );
 }
 
 class BookListScreenErrorState extends BookListScreenState {
   final String message;
-  final int count, offset;
+  final int count, page;
 
-  BookListScreenErrorState(this.message, this.count, this.offset);
+  BookListScreenErrorState(this.message, this.count, this.page);
 }
 
 class BookListScreenBloc
     extends Bloc<BookListScreenEvent, BookListScreenState> {
-  final HGraberClient _client;
+  final Repository _client;
 
   BookListScreenBloc(this._client) : super(BookListScreenLoadingState()) {
     on<LoadingBookListEvent>((event, emit) async {
       emit(BookListScreenLoadingState());
       try {
-        final model = await _client.bookList(event.count, event.offset);
-        // Из-за особенностей API, получение количества книг приходится делать отдельно.
-        final info = await _client.mainInfo();
+        final data = await _client.books(event.count, event.page);
         emit(BookListScreenLoadedState(
-            model, event.count, event.offset, info.count));
+          data.books,
+          event.count,
+          event.page,
+          data.pages,
+        ));
       } catch (e) {
-        emit(BookListScreenErrorState(e.toString(), event.count, event.offset));
+        emit(BookListScreenErrorState(e.toString(), event.count, event.page));
       }
     });
     on<RateBookListEvent>((event, emit) async {
       try {
-        await _client.bookRate(event.bookID, event.rate);
-        add(LoadingBookListEvent(event.count, event.offset));
+        await _client.updateBookRating(event.bookID, event.rate);
+        add(LoadingBookListEvent(event.count, event.page));
       } catch (e) {
-        emit(BookListScreenErrorState(e.toString(), event.count, event.offset));
+        emit(BookListScreenErrorState(e.toString(), event.count, event.page));
       }
     });
   }
