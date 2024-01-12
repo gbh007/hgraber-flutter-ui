@@ -39,8 +39,8 @@ final GoRouter _router = GoRouter(
                     pageNumber = int.parse(state.pathParameters['pageNumber']!);
                   }
 
-                  return ReaderScreen(
-                    id,
+                  return ReaderScreenAssembly(
+                    id: id,
                     currentPage: pageNumber,
                   );
                 },

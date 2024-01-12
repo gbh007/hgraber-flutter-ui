@@ -1,20 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:hgraber_ui/repository/repository.dart';
+import 'package:hgraber_ui/repository/repository.dart' show Repository;
+
+import 'model.dart';
 
 sealed class ReaderScreenEvent {}
 
 class LoadingBookEvent extends ReaderScreenEvent {
   final int id;
-  final int currentPage;
 
-  LoadingBookEvent(this.id, this.currentPage);
+  LoadingBookEvent(this.id);
 }
 
-class RateBookPageEvent extends ReaderScreenEvent {
+class UpdateBookPageRatingEvent extends ReaderScreenEvent {
   final int id, page, rate;
 
-  RateBookPageEvent(this.id, this.page, this.rate);
+  UpdateBookPageRatingEvent(this.id, this.page, this.rate);
 }
 
 sealed class ReaderScreenState {}
@@ -22,17 +25,15 @@ sealed class ReaderScreenState {}
 class ReaderScreenLoadingState extends ReaderScreenState {}
 
 class ReaderScreenLoadedState extends ReaderScreenState {
-  final BookDetailInfo model;
-  final int currentPage;
+  final Book book;
 
-  ReaderScreenLoadedState(this.model, this.currentPage);
+  ReaderScreenLoadedState(this.book);
 }
 
 class ReaderScreenErrorState extends ReaderScreenState {
   final String message;
-  final int currentPage;
 
-  ReaderScreenErrorState(this.message, this.currentPage);
+  ReaderScreenErrorState(this.message);
 }
 
 class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
@@ -43,17 +44,30 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
       emit(ReaderScreenLoadingState());
       try {
         final model = await _client.book(event.id);
-        emit(ReaderScreenLoadedState(model, event.currentPage));
+        emit(ReaderScreenLoadedState(
+          Book(
+            name: model.name,
+            pageCount: model.pageCount,
+            pages: model.pages
+                    ?.map((page) => Page(
+                          pageNumber: page.pageNumber,
+                          rating: page.rate,
+                          previewUrl: page.previewUrl,
+                        ))
+                    .toList() ??
+                List.empty(),
+          ),
+        ));
       } catch (e) {
-        emit(ReaderScreenErrorState(e.toString(), event.currentPage));
+        emit(ReaderScreenErrorState(e.toString()));
       }
     });
-    on<RateBookPageEvent>((event, emit) async {
+    on<UpdateBookPageRatingEvent>((event, emit) async {
       try {
         await _client.updatePageRating(event.id, event.page, event.rate);
-        add(LoadingBookEvent(event.id, event.page));
+        add(LoadingBookEvent(event.id));
       } catch (e) {
-        emit(ReaderScreenErrorState(e.toString(), event.page));
+        emit(ReaderScreenErrorState(e.toString()));
       }
     });
   }
@@ -62,6 +76,17 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
 class CurrentPageCubit extends Cubit<int> {
   CurrentPageCubit(int v) : super(v);
 
-  void forward() => emit(state + 1);
-  void back() => emit(state - 1);
+  void forward(int count) {
+    final currentPage = max(1, min(state, count));
+    if (currentPage < count) {
+      emit(currentPage + 1);
+    }
+  }
+
+  void back(int count) {
+    final currentPage = max(1, min(state, count));
+    if (currentPage > 1) {
+      emit(currentPage - 1);
+    }
+  }
 }

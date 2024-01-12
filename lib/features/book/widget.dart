@@ -259,7 +259,7 @@ class BookBarWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('#$id'),
-            RateWidget(rating, updateRate: updateRating),
+            RateWidget(rating, updateRating: updateRating),
             Text('Страниц: $pageCount'),
           ],
         ),
@@ -320,7 +320,7 @@ class BookImageListWidget extends StatelessWidget {
               Center(
                   child: RateWidget(
                 page.rate,
-                updateRate: (rate) {
+                updateRating: (rate) {
                   if (updateRate != null) {
                     updateRate!(page.pageNumber, rate);
                   }

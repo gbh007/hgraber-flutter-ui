@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:hgraber_ui/widgets/navigation.dart';
+import 'package:hgraber_ui/widgets/screen.dart';
 
 import 'book_bloc.dart';
 import 'book_list_bloc.dart';
@@ -23,10 +23,10 @@ class BookView extends StatelessWidget {
     return BlocBuilder<BookScreenBloc, BookScreenState>(
       builder: (context, state) {
         if (state is BookScreenErrorState) {
-          return ErrorScreen(
-            titleText: 'Книга',
+          return ErrorScaffold(
+            title: 'Книга',
             text: state.message,
-            retray: () =>
+            onTap: () =>
                 context.read<BookScreenBloc>().add(LoadingBookEvent(id)),
           );
         }
@@ -34,9 +34,9 @@ class BookView extends StatelessWidget {
         if (state is BookScreenLoadedState) {
           final model = state.model;
 
-          return SimpleScreen(
-            titleText: 'Книга',
-            body: Column(
+          return SimpleScaffold(
+            title: 'Книга',
+            child: Column(
               children: <Widget>[
                 BookDetailsWidget(
                   model,
@@ -61,7 +61,7 @@ class BookView extends StatelessWidget {
           );
         }
 
-        return const LoadingScreen(titleText: 'Книга');
+        return const LoadingScaffold(title: 'Книга');
       },
     );
   }
@@ -75,10 +75,10 @@ class BookListView extends StatelessWidget {
     return BlocBuilder<BookListScreenBloc, BookListScreenState>(
       builder: (context, state) {
         if (state is BookListScreenErrorState) {
-          return ErrorScreen(
-            titleText: 'Книги',
+          return ErrorScaffold(
+            title: 'Книги',
             text: state.message,
-            retray: () => context
+            onTap: () => context
                 .read<BookListScreenBloc>()
                 .add(LoadingBookListEvent(state.count, state.page)),
           );
@@ -124,9 +124,9 @@ class BookListView extends StatelessWidget {
           });
 
           if (isVertical || bookOnRow == 1) {
-            return SimpleScreen(
-              titleText: 'Книги',
-              body: Column(
+            return SimpleScaffold(
+              title: 'Книги',
+              child: Column(
                 children: [
                   Wrap(children: pages),
                   Expanded(
@@ -139,9 +139,9 @@ class BookListView extends StatelessWidget {
             );
           }
 
-          return SimpleScreen(
-            titleText: 'Книги',
-            body: Column(
+          return SimpleScaffold(
+            title: 'Книги',
+            child: Column(
               children: [
                 Wrap(children: pages),
                 Expanded(
@@ -156,7 +156,7 @@ class BookListView extends StatelessWidget {
           );
         }
 
-        return const LoadingScreen(titleText: 'Книга');
+        return const LoadingScaffold(title: 'Книга');
       },
     );
   }

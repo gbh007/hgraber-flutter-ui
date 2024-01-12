@@ -28,11 +28,11 @@ abstract final class _RateColor {
 
 class RateWidget extends StatelessWidget {
   final int rate;
-  final void Function(int rate)? updateRate;
+  final void Function(int rate)? updateRating;
 
   const RateWidget(
     this.rate, {
-    this.updateRate,
+    this.updateRating,
     super.key,
   });
 
@@ -47,7 +47,7 @@ class RateWidget extends StatelessWidget {
       var ratePos = i;
       widgets.add(
         IconButton(
-          onPressed: () => updateRate == null ? () : updateRate!(ratePos),
+          onPressed: () => updateRating == null ? () : updateRating!(ratePos),
           icon: Icon(
             rate >= ratePos ? Icons.star : Icons.star_border,
             // На данный момент цвет выглядит не очень

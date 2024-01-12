@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hgraber_ui/widgets/navigation.dart';
+import 'package:hgraber_ui/widgets/screen.dart';
 
 import 'wigets.dart';
 import 'bloc.dart';
@@ -13,10 +13,10 @@ class MainPageView extends StatelessWidget {
     return BlocBuilder<MainPageBloc, MainPageState>(
       builder: (context, state) {
         if (state is MainPageErrorState) {
-          return ErrorScreen(
-            titleText: 'Главная',
+          return ErrorScaffold(
+            title: 'Главная',
             text: state.message,
-            retray: () => context.read<MainPageBloc>().add(FetchMainEvent()),
+            onTap: () => context.read<MainPageBloc>().add(FetchMainEvent()),
           );
         }
 
@@ -29,9 +29,9 @@ class MainPageView extends StatelessWidget {
             widgets.add(WorkersWidget(model.workers!));
           }
 
-          return SimpleScreen(
-            titleText: 'Главная',
-            body: Center(
+          return SimpleScaffold(
+            title: 'Главная',
+            child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Center(
@@ -56,7 +56,7 @@ class MainPageView extends StatelessWidget {
           );
         }
 
-        return const LoadingScreen(titleText: 'Главная');
+        return const LoadingScaffold(title: 'Главная');
       },
     );
   }

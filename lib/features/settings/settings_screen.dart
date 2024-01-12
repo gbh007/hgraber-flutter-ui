@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hgraber_ui/common/global.dart';
-import 'package:hgraber_ui/widgets/navigation.dart';
+import 'package:hgraber_ui/widgets/screen.dart';
 
 import 'wigets.dart';
 
@@ -14,9 +14,9 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GlobalBloc, GlobalModel>(builder: (context, state) {
-      return SimpleScreen(
-        titleText: 'Настройки',
-        body: SettingsWidget(
+      return SimpleScaffold(
+        title: 'Настройки',
+        child: SettingsWidget(
           model: state,
           onChange: (newModel) =>
               context.read<GlobalBloc>().updateModel(newModel),
