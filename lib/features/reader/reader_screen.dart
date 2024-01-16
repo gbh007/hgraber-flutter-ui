@@ -1,45 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:hgraber_ui/repository/repository.dart' show Repository;
 import 'package:hgraber_ui/widgets/screen.dart';
 
 import 'bloc.dart';
-import 'widget.dart';
+import 'widgets/reader_widget.dart';
+import 'widgets/reader_navigation_widget.dart';
 
-class ReaderScreenAssembly extends StatelessWidget {
+final class ReaderScreen extends StatelessWidget {
   final int id;
-  final int? currentPage;
-
-  const ReaderScreenAssembly({
-    required this.id,
-    this.currentPage,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final client = RepositoryProvider.of<Repository>(context);
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => ReaderScreenBloc(client)..add(LoadingBookEvent(id)),
-        ),
-        BlocProvider(
-          create: (_) => CurrentPageCubit(currentPage ?? 1),
-        )
-      ],
-      child: ReaderScreen(id: id),
-    );
-  }
-}
-
-class ReaderScreen extends StatelessWidget {
-  final int id;
+  final TextTheme textTheme;
+  final ColorScheme colorScheme;
 
   const ReaderScreen({
     required this.id,
+    required this.textTheme,
+    required this.colorScheme,
     super.key,
   });
 
@@ -68,6 +44,8 @@ class ReaderScreen extends StatelessWidget {
                     .read<ReaderScreenBloc>()
                     .add(UpdateBookPageRatingEvent(id, page, rate));
               },
+              colorScheme: colorScheme,
+              textTheme: textTheme,
             ),
           );
         }

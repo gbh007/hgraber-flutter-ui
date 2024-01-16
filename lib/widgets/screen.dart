@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'navigation.dart' show BottomNavigationBarWidget;
 
-class SimpleScaffold extends StatelessWidget {
+final class SimpleScaffold extends StatelessWidget {
   final String title;
   final Widget child;
   final Widget? floatingActionButton;
@@ -30,7 +30,7 @@ class SimpleScaffold extends StatelessWidget {
   }
 }
 
-class ErrorScaffold extends StatelessWidget {
+final class ErrorScaffold extends StatelessWidget {
   final String text;
   final String title;
   final Function()? onTap;
@@ -83,7 +83,7 @@ class ErrorScaffold extends StatelessWidget {
   }
 }
 
-class LoadingScaffold extends StatelessWidget {
+final class LoadingScaffold extends StatelessWidget {
   final String text;
   final String title;
 

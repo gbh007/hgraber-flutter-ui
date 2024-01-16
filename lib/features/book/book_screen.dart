@@ -1,45 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hgraber_ui/features/book/bloc/events.dart';
+import 'package:hgraber_ui/features/book/bloc/states.dart';
+import 'package:hgraber_ui/features/book/widgets/book_pages_preview_widget.dart';
 
-import 'package:hgraber_ui/common/global.dart';
-import 'package:hgraber_ui/repository/repository.dart';
+import 'package:hgraber_ui/widgets/screen.dart';
 
-import 'view.dart';
-import 'book_bloc.dart';
-import 'book_list_bloc.dart';
+import 'bloc/book_bloc.dart';
+import 'widgets/book_details_widget.dart';
 
 class BookScreen extends StatelessWidget {
   final int id;
+  final TextTheme textTheme;
+  final ColorScheme colorScheme;
 
-  const BookScreen(
-    this.id, {
+  const BookScreen({
+    required this.id,
+    required this.textTheme,
+    required this.colorScheme,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final client = RepositoryProvider.of<Repository>(context);
+    return BlocBuilder<BookScreenBloc, BookScreenState>(
+      builder: (context, state) {
+        if (state is BookScreenErrorState) {
+          return ErrorScaffold(
+            title: 'Книга',
+            text: state.message,
+            onTap: () =>
+                context.read<BookScreenBloc>().add(LoadingBookEvent(id)),
+          );
+        }
 
-    return BlocProvider(
-      create: (_) => BookScreenBloc(client)..add(LoadingBookEvent(id)),
-      child: BookView(id),
+        if (state is BookScreenLoadedState) {
+          return SimpleScaffold(
+            title: 'Книга',
+            child: Column(
+              children: <Widget>[
+                BookDetailsWidget(
+                  book: state.book,
+                  updateRate: (rate) {
+                    context.read<BookScreenBloc>().add(RateBookEvent(id, rate));
+                  },
+                  colorScheme: colorScheme,
+                  textTheme: textTheme,
+                ),
+                Expanded(
+                  child: BookPagesPreviewWidget(
+                    pages: state.book.pages,
+                    updateRate: (page, rate) {
+                      context
+                          .read<BookScreenBloc>()
+                          .add(RateBookPageEvent(id, page, rate));
+                    },
+                    onTap: (pageNumber) =>
+                        context.go('/book/$id/read/$pageNumber'),
+                    colorScheme: colorScheme,
+                    textTheme: textTheme,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return const LoadingScaffold(title: 'Книга');
+      },
     );
-  }
-}
-
-class BookListScreen extends StatelessWidget {
-  const BookListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final client = RepositoryProvider.of<Repository>(context);
-
-    return BlocBuilder<GlobalBloc, GlobalModel>(builder: (context, state) {
-      return BlocProvider(
-        create: (_) => BookListScreenBloc(client)
-          ..add(LoadingBookListEvent(state.bookOnPage, 0)),
-        child: const BookListView(),
-      );
-    });
   }
 }
