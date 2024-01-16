@@ -1,5 +1,5 @@
 import 'repository_model.dart';
-import 'api_v2_client.dart';
+import 'client_v2/api_v2_client.dart';
 
 class Repository {
   late APIv2Client _v2client;
