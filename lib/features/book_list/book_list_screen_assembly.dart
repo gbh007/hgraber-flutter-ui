@@ -8,7 +8,7 @@ import 'package:hgraber_ui/repository/repository.dart';
 import 'book_list_screen.dart';
 import 'bloc/book_list_bloc.dart';
 
-class BookListScreenAssembly extends StatelessWidget {
+final class BookListScreenAssembly extends StatelessWidget {
   const BookListScreenAssembly({super.key});
 
   @override

@@ -6,10 +6,8 @@ import 'package:hgraber_ui/common/global.dart';
 import 'package:hgraber_ui/features/book_list/book_list_screen_assembly.dart';
 import 'package:hgraber_ui/features/reader/reader_screen_assembly.dart';
 import 'package:hgraber_ui/features/settings/settings_screen.dart';
-
 import 'package:hgraber_ui/repository/repository.dart';
-
-import 'package:hgraber_ui/features/main/main_screen.dart';
+import 'package:hgraber_ui/features/home/home_screen_assembly.dart';
 
 final class AppAssembly extends StatelessWidget {
   const AppAssembly({super.key});
@@ -65,7 +63,7 @@ final class _App extends StatelessWidget {
       GoRoute(
         path: '/',
         name: 'home',
-        builder: (context, state) => const MainScreen(),
+        builder: (context, state) => const HomeScreenAssembly(),
       ),
       GoRoute(
           path: "/book",

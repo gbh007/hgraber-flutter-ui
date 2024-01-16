@@ -7,7 +7,7 @@ import 'package:hgraber_ui/repository/repository.dart';
 import 'book_screen.dart';
 import 'bloc/book_bloc.dart';
 
-class BookScreenAssembly extends StatelessWidget {
+final class BookScreenAssembly extends StatelessWidget {
   final int id;
 
   const BookScreenAssembly({

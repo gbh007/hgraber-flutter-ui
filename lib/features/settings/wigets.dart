@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:hgraber_ui/common/global.dart';
 
 class SettingsWidget extends StatelessWidget {

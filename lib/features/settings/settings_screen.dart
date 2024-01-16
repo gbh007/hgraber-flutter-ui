@@ -6,10 +6,8 @@ import 'package:hgraber_ui/widgets/screen.dart';
 
 import 'wigets.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({
-    super.key,
-  });
+final class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

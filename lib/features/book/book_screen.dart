@@ -10,7 +10,7 @@ import 'package:hgraber_ui/widgets/screen.dart';
 import 'bloc/book_bloc.dart';
 import 'widgets/book_details_widget.dart';
 
-class BookScreen extends StatelessWidget {
+final class BookScreen extends StatelessWidget {
   final int id;
   final TextTheme textTheme;
   final ColorScheme colorScheme;
