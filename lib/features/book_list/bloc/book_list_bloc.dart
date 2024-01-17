@@ -25,7 +25,7 @@ class BookListScreenBloc
                       parsedPage: book.parsedPage,
                       pageCount: book.pageCount,
                       pageLoadedPercent: book.pageLoadedPercent,
-                      rating: book.rate,
+                      rating: book.rating,
                     ),
                     previewUrl: book.previewUrl,
                     tags: book.tags,
@@ -47,7 +47,7 @@ class BookListScreenBloc
     });
     on<RateBookEvent>((event, emit) async {
       try {
-        await _client.updateBookRating(event.bookID, event.rate);
+        await _client.updateBookRating(event.bookID, event.rating);
         add(LoadingBooksEvent(event.count, event.page));
       } catch (e) {
         emit(BookListScreenErrorState(e.toString(), event.count, event.page));

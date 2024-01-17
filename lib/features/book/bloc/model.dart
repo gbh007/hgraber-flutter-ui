@@ -33,7 +33,7 @@ class BookPagePreview with _$BookPagePreview {
   const factory BookPagePreview({
     required int pageNumber,
     String? previewUrl,
-    required int rate,
+    required int rating,
   }) = _BookPagePreview;
 }
 

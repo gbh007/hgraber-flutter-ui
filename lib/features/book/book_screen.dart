@@ -42,8 +42,10 @@ final class BookScreen extends StatelessWidget {
               children: <Widget>[
                 BookDetailsWidget(
                   book: state.book,
-                  updateRate: (rate) {
-                    context.read<BookScreenBloc>().add(RateBookEvent(id, rate));
+                  updateRating: (rating) {
+                    context
+                        .read<BookScreenBloc>()
+                        .add(RateBookEvent(id, rating));
                   },
                   colorScheme: colorScheme,
                   textTheme: textTheme,
@@ -51,10 +53,10 @@ final class BookScreen extends StatelessWidget {
                 Expanded(
                   child: BookPagesPreviewWidget(
                     pages: state.book.pages,
-                    updateRate: (page, rate) {
+                    updateRating: (page, rating) {
                       context
                           .read<BookScreenBloc>()
-                          .add(RateBookPageEvent(id, page, rate));
+                          .add(RateBookPageEvent(id, page, rating));
                     },
                     onTap: (pageNumber) =>
                         context.go('/book/$id/read/$pageNumber'),

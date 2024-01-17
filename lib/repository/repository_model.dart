@@ -14,7 +14,7 @@ class BookShortInfo with _$BookShortInfo {
     required bool parsedPage,
     required int pageCount,
     required double pageLoadedPercent,
-    required int rate,
+    required int rating,
     List<String>? tags,
     required bool hasMoreTags,
   }) = _BookShortInfo;
@@ -48,7 +48,7 @@ class BookDetailInfo with _$BookDetailInfo {
     required bool parsedPage,
     required int pageCount,
     required double pageLoadedPercent,
-    required int rate,
+    required int rating,
     List<BookDetailPagePreview>? pages,
     List<BookDetailAttributeInfo>? attributes,
   }) = _BookDetailInfo;
@@ -59,7 +59,7 @@ class BookDetailPagePreview with _$BookDetailPagePreview {
   const factory BookDetailPagePreview({
     required int pageNumber,
     String? previewUrl,
-    required int rate,
+    required int rating,
   }) = _BookDetailPagePreview;
 }
 

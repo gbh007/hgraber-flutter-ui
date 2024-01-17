@@ -8,10 +8,11 @@ class GlobalBloc extends Cubit<GlobalModel> {
   final Repository _repository;
 
   GlobalBloc(this._repository)
-      : super(const GlobalModel(baseUrl: baseUrl, scale: 1.0, bookOnPage: 20));
+      : super(const GlobalModel(
+            baseUrl: baseUrl, scale: 1.0, bookOnPage: 20, token: ''));
 
   void updateModel(GlobalModel data) {
     emit(data);
-    _repository.updateBaseUrl(data.baseUrl);
+    _repository.updateBaseUrl(data.baseUrl, data.token);
   }
 }

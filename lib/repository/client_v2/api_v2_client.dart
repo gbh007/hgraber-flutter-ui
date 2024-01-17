@@ -10,16 +10,19 @@ class APIv2Client {
 
   APIv2Client({
     required String baseUrl,
+    required String token,
   }) {
     if (kIsWeb) {
       _client = Dio(BaseOptions(
         baseUrl: baseUrl,
         contentType: Headers.jsonContentType,
+        headers: <String, String>{'x-token': token}, // FIXME: в константу
       ));
     } else {
       _client = DioForNative(BaseOptions(
         baseUrl: baseUrl,
         contentType: Headers.jsonContentType,
+        headers: <String, String>{'x-token': token}, // FIXME: в константу
       ));
     }
   }
@@ -46,17 +49,17 @@ class APIv2Client {
     });
   }
 
-  Future<void> updateBookRating(int id, int rate) {
+  Future<void> updateBookRating(int id, int rating) {
     return _client
-        .post('/api/rate', data: {'id': id, 'rate': rate}).then((resp) {
+        .post('/api/rate', data: {'id': id, 'rating': rating}).then((resp) {
       return;
     });
   }
 
-  Future<void> updatePageRating(int id, int pageNumber, int rate) {
+  Future<void> updatePageRating(int id, int pageNumber, int rating) {
     return _client.post(
       '/api/rate',
-      data: {'id': id, 'page': pageNumber, 'rate': rate},
+      data: {'id': id, 'page': pageNumber, 'rating': rating},
     ).then((resp) {
       return;
     });

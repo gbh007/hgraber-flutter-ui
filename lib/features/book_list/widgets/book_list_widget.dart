@@ -38,13 +38,13 @@ class BookListWidget extends StatelessWidget {
             onTap: () => context.go('/book/${book.info.id}'),
             child: BookShortInfoWidget(
               book: book,
-              updateRate: (rate) {
+              updateRating: (rating) {
                 context.read<BookListScreenBloc>().add(
                       RateBookEvent(
                         count,
                         page,
                         book.info.id,
-                        rate,
+                        rating,
                       ),
                     );
               },

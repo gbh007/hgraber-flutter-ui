@@ -7,13 +7,13 @@ class LoadingBookEvent extends BookScreenEvent {
 }
 
 class RateBookEvent extends BookScreenEvent {
-  final int id, rate;
+  final int id, rating;
 
-  RateBookEvent(this.id, this.rate);
+  RateBookEvent(this.id, this.rating);
 }
 
 class RateBookPageEvent extends BookScreenEvent {
-  final int id, rate, pageNumber;
+  final int id, rating, pageNumber;
 
-  RateBookPageEvent(this.id, this.pageNumber, this.rate);
+  RateBookPageEvent(this.id, this.pageNumber, this.rating);
 }

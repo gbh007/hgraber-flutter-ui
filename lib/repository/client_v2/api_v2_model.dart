@@ -25,7 +25,7 @@ class APIv2BookShortInfo {
   @JsonKey(name: 'page_loaded_percent')
   final double pageLoadedPercent;
 
-  final int rate;
+  final int rating;
 
   final List<String>? tags;
 
@@ -41,7 +41,7 @@ class APIv2BookShortInfo {
     required this.parsedPage,
     required this.pageCount,
     required this.pageLoadedPercent,
-    required this.rate,
+    required this.rating,
     this.tags,
     required this.hasMoreTags,
   });
@@ -108,7 +108,7 @@ class APIv2BookDetailInfo {
   @JsonKey(name: 'page_loaded_percent')
   final double pageLoadedPercent;
 
-  final int rate;
+  final int rating;
 
   final List<APIv2BookDetailPagePreview>? pages;
   final List<APIv2BookDetailAttributeInfo>? attributes;
@@ -122,7 +122,7 @@ class APIv2BookDetailInfo {
     required this.parsedPage,
     required this.pageCount,
     required this.pageLoadedPercent,
-    required this.rate,
+    required this.rating,
     this.pages,
     this.attributes,
   });
@@ -140,12 +140,12 @@ class APIv2BookDetailPagePreview {
   @JsonKey(name: 'preview_url')
   final String? previewUrl;
 
-  final int rate;
+  final int rating;
 
   APIv2BookDetailPagePreview({
     required this.pageNumber,
     this.previewUrl,
-    required this.rate,
+    required this.rating,
   });
 
   factory APIv2BookDetailPagePreview.fromJson(Map<String, dynamic> json) =>
@@ -168,7 +168,6 @@ class APIv2BookDetailAttributeInfo {
   Map<String, dynamic> toJson() => _$APIv2BookDetailAttributeInfoToJson(this);
 }
 
-
 @JsonSerializable()
 class APIv2Worker {
   final String name;
@@ -186,7 +185,8 @@ class APIv2Worker {
     required this.runners,
   });
 
-  factory APIv2Worker.fromJson(Map<String, dynamic> json) => _$APIv2WorkerFromJson(json);
+  factory APIv2Worker.fromJson(Map<String, dynamic> json) =>
+      _$APIv2WorkerFromJson(json);
   Map<String, dynamic> toJson() => _$APIv2WorkerToJson(this);
 }
 

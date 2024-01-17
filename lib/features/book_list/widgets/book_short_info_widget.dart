@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hgraber_ui/features/book_list/bloc/model.dart';
+import 'package:hgraber_ui/widgets/image_widget.dart';
 import 'book_attribute_widget.dart';
 import 'book_bar_widget.dart';
-import 'image_preview_widget.dart';
 
 class BookShortInfoWidget extends StatelessWidget {
   final Book book;
-  final void Function(int)? updateRate;
+  final void Function(int)? updateRating;
   final TextTheme textTheme;
   final ColorScheme colorScheme;
 
   const BookShortInfoWidget({
     required this.book,
-    this.updateRate,
+    this.updateRating,
     required this.textTheme,
     required this.colorScheme,
     super.key,
@@ -28,7 +28,7 @@ class BookShortInfoWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: ImagePreviewWidget(
+            child: ImageWidget(
               url: book.previewUrl,
               colorScheme: colorScheme,
               textTheme: textTheme,
@@ -49,7 +49,7 @@ class BookShortInfoWidget extends StatelessWidget {
                   ),
                   BookBarWidget(
                     info: book.info,
-                    updateRating: updateRate,
+                    updateRating: updateRating,
                     colorScheme: colorScheme,
                     textTheme: textTheme,
                   ),

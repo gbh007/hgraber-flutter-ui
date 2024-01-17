@@ -24,7 +24,7 @@ mixin _$BookShortInfo {
   bool get parsedPage => throw _privateConstructorUsedError;
   int get pageCount => throw _privateConstructorUsedError;
   double get pageLoadedPercent => throw _privateConstructorUsedError;
-  int get rate => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
   bool get hasMoreTags => throw _privateConstructorUsedError;
 
@@ -48,7 +48,7 @@ abstract class $BookShortInfoCopyWith<$Res> {
       bool parsedPage,
       int pageCount,
       double pageLoadedPercent,
-      int rate,
+      int rating,
       List<String>? tags,
       bool hasMoreTags});
 }
@@ -74,7 +74,7 @@ class _$BookShortInfoCopyWithImpl<$Res, $Val extends BookShortInfo>
     Object? parsedPage = null,
     Object? pageCount = null,
     Object? pageLoadedPercent = null,
-    Object? rate = null,
+    Object? rating = null,
     Object? tags = freezed,
     Object? hasMoreTags = null,
   }) {
@@ -111,9 +111,9 @@ class _$BookShortInfoCopyWithImpl<$Res, $Val extends BookShortInfo>
           ? _value.pageLoadedPercent
           : pageLoadedPercent // ignore: cast_nullable_to_non_nullable
               as double,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
       tags: freezed == tags
           ? _value.tags
@@ -144,7 +144,7 @@ abstract class _$$BookShortInfoImplCopyWith<$Res>
       bool parsedPage,
       int pageCount,
       double pageLoadedPercent,
-      int rate,
+      int rating,
       List<String>? tags,
       bool hasMoreTags});
 }
@@ -168,7 +168,7 @@ class __$$BookShortInfoImplCopyWithImpl<$Res>
     Object? parsedPage = null,
     Object? pageCount = null,
     Object? pageLoadedPercent = null,
-    Object? rate = null,
+    Object? rating = null,
     Object? tags = freezed,
     Object? hasMoreTags = null,
   }) {
@@ -205,9 +205,9 @@ class __$$BookShortInfoImplCopyWithImpl<$Res>
           ? _value.pageLoadedPercent
           : pageLoadedPercent // ignore: cast_nullable_to_non_nullable
               as double,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
       tags: freezed == tags
           ? _value._tags
@@ -235,7 +235,7 @@ class _$BookShortInfoImpl
       required this.parsedPage,
       required this.pageCount,
       required this.pageLoadedPercent,
-      required this.rate,
+      required this.rating,
       final List<String>? tags,
       required this.hasMoreTags})
       : _tags = tags;
@@ -257,7 +257,7 @@ class _$BookShortInfoImpl
   @override
   final double pageLoadedPercent;
   @override
-  final int rate;
+  final int rating;
   final List<String>? _tags;
   @override
   List<String>? get tags {
@@ -273,7 +273,7 @@ class _$BookShortInfoImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookShortInfo(id: $id, created: $created, previewUrl: $previewUrl, parsedName: $parsedName, name: $name, parsedPage: $parsedPage, pageCount: $pageCount, pageLoadedPercent: $pageLoadedPercent, rate: $rate, tags: $tags, hasMoreTags: $hasMoreTags)';
+    return 'BookShortInfo(id: $id, created: $created, previewUrl: $previewUrl, parsedName: $parsedName, name: $name, parsedPage: $parsedPage, pageCount: $pageCount, pageLoadedPercent: $pageLoadedPercent, rating: $rating, tags: $tags, hasMoreTags: $hasMoreTags)';
   }
 
   @override
@@ -289,7 +289,7 @@ class _$BookShortInfoImpl
       ..add(DiagnosticsProperty('parsedPage', parsedPage))
       ..add(DiagnosticsProperty('pageCount', pageCount))
       ..add(DiagnosticsProperty('pageLoadedPercent', pageLoadedPercent))
-      ..add(DiagnosticsProperty('rate', rate))
+      ..add(DiagnosticsProperty('rating', rating))
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('hasMoreTags', hasMoreTags));
   }
@@ -312,7 +312,7 @@ class _$BookShortInfoImpl
                 other.pageCount == pageCount) &&
             (identical(other.pageLoadedPercent, pageLoadedPercent) ||
                 other.pageLoadedPercent == pageLoadedPercent) &&
-            (identical(other.rate, rate) || other.rate == rate) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.hasMoreTags, hasMoreTags) ||
                 other.hasMoreTags == hasMoreTags));
@@ -329,7 +329,7 @@ class _$BookShortInfoImpl
       parsedPage,
       pageCount,
       pageLoadedPercent,
-      rate,
+      rating,
       const DeepCollectionEquality().hash(_tags),
       hasMoreTags);
 
@@ -350,7 +350,7 @@ abstract class _BookShortInfo implements BookShortInfo {
       required final bool parsedPage,
       required final int pageCount,
       required final double pageLoadedPercent,
-      required final int rate,
+      required final int rating,
       final List<String>? tags,
       required final bool hasMoreTags}) = _$BookShortInfoImpl;
 
@@ -371,7 +371,7 @@ abstract class _BookShortInfo implements BookShortInfo {
   @override
   double get pageLoadedPercent;
   @override
-  int get rate;
+  int get rating;
   @override
   List<String>? get tags;
   @override
@@ -727,7 +727,7 @@ mixin _$BookDetailInfo {
   bool get parsedPage => throw _privateConstructorUsedError;
   int get pageCount => throw _privateConstructorUsedError;
   double get pageLoadedPercent => throw _privateConstructorUsedError;
-  int get rate => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
   List<BookDetailPagePreview>? get pages => throw _privateConstructorUsedError;
   List<BookDetailAttributeInfo>? get attributes =>
       throw _privateConstructorUsedError;
@@ -752,7 +752,7 @@ abstract class $BookDetailInfoCopyWith<$Res> {
       bool parsedPage,
       int pageCount,
       double pageLoadedPercent,
-      int rate,
+      int rating,
       List<BookDetailPagePreview>? pages,
       List<BookDetailAttributeInfo>? attributes});
 }
@@ -778,7 +778,7 @@ class _$BookDetailInfoCopyWithImpl<$Res, $Val extends BookDetailInfo>
     Object? parsedPage = null,
     Object? pageCount = null,
     Object? pageLoadedPercent = null,
-    Object? rate = null,
+    Object? rating = null,
     Object? pages = freezed,
     Object? attributes = freezed,
   }) {
@@ -815,9 +815,9 @@ class _$BookDetailInfoCopyWithImpl<$Res, $Val extends BookDetailInfo>
           ? _value.pageLoadedPercent
           : pageLoadedPercent // ignore: cast_nullable_to_non_nullable
               as double,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
       pages: freezed == pages
           ? _value.pages
@@ -848,7 +848,7 @@ abstract class _$$BookDetailInfoImplCopyWith<$Res>
       bool parsedPage,
       int pageCount,
       double pageLoadedPercent,
-      int rate,
+      int rating,
       List<BookDetailPagePreview>? pages,
       List<BookDetailAttributeInfo>? attributes});
 }
@@ -872,7 +872,7 @@ class __$$BookDetailInfoImplCopyWithImpl<$Res>
     Object? parsedPage = null,
     Object? pageCount = null,
     Object? pageLoadedPercent = null,
-    Object? rate = null,
+    Object? rating = null,
     Object? pages = freezed,
     Object? attributes = freezed,
   }) {
@@ -909,9 +909,9 @@ class __$$BookDetailInfoImplCopyWithImpl<$Res>
           ? _value.pageLoadedPercent
           : pageLoadedPercent // ignore: cast_nullable_to_non_nullable
               as double,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
       pages: freezed == pages
           ? _value._pages
@@ -939,7 +939,7 @@ class _$BookDetailInfoImpl
       required this.parsedPage,
       required this.pageCount,
       required this.pageLoadedPercent,
-      required this.rate,
+      required this.rating,
       final List<BookDetailPagePreview>? pages,
       final List<BookDetailAttributeInfo>? attributes})
       : _pages = pages,
@@ -962,7 +962,7 @@ class _$BookDetailInfoImpl
   @override
   final double pageLoadedPercent;
   @override
-  final int rate;
+  final int rating;
   final List<BookDetailPagePreview>? _pages;
   @override
   List<BookDetailPagePreview>? get pages {
@@ -985,7 +985,7 @@ class _$BookDetailInfoImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookDetailInfo(id: $id, created: $created, previewUrl: $previewUrl, parsedName: $parsedName, name: $name, parsedPage: $parsedPage, pageCount: $pageCount, pageLoadedPercent: $pageLoadedPercent, rate: $rate, pages: $pages, attributes: $attributes)';
+    return 'BookDetailInfo(id: $id, created: $created, previewUrl: $previewUrl, parsedName: $parsedName, name: $name, parsedPage: $parsedPage, pageCount: $pageCount, pageLoadedPercent: $pageLoadedPercent, rating: $rating, pages: $pages, attributes: $attributes)';
   }
 
   @override
@@ -1001,7 +1001,7 @@ class _$BookDetailInfoImpl
       ..add(DiagnosticsProperty('parsedPage', parsedPage))
       ..add(DiagnosticsProperty('pageCount', pageCount))
       ..add(DiagnosticsProperty('pageLoadedPercent', pageLoadedPercent))
-      ..add(DiagnosticsProperty('rate', rate))
+      ..add(DiagnosticsProperty('rating', rating))
       ..add(DiagnosticsProperty('pages', pages))
       ..add(DiagnosticsProperty('attributes', attributes));
   }
@@ -1024,7 +1024,7 @@ class _$BookDetailInfoImpl
                 other.pageCount == pageCount) &&
             (identical(other.pageLoadedPercent, pageLoadedPercent) ||
                 other.pageLoadedPercent == pageLoadedPercent) &&
-            (identical(other.rate, rate) || other.rate == rate) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
             const DeepCollectionEquality().equals(other._pages, _pages) &&
             const DeepCollectionEquality()
                 .equals(other._attributes, _attributes));
@@ -1041,7 +1041,7 @@ class _$BookDetailInfoImpl
       parsedPage,
       pageCount,
       pageLoadedPercent,
-      rate,
+      rating,
       const DeepCollectionEquality().hash(_pages),
       const DeepCollectionEquality().hash(_attributes));
 
@@ -1063,7 +1063,7 @@ abstract class _BookDetailInfo implements BookDetailInfo {
       required final bool parsedPage,
       required final int pageCount,
       required final double pageLoadedPercent,
-      required final int rate,
+      required final int rating,
       final List<BookDetailPagePreview>? pages,
       final List<BookDetailAttributeInfo>? attributes}) = _$BookDetailInfoImpl;
 
@@ -1084,7 +1084,7 @@ abstract class _BookDetailInfo implements BookDetailInfo {
   @override
   double get pageLoadedPercent;
   @override
-  int get rate;
+  int get rating;
   @override
   List<BookDetailPagePreview>? get pages;
   @override
@@ -1099,7 +1099,7 @@ abstract class _BookDetailInfo implements BookDetailInfo {
 mixin _$BookDetailPagePreview {
   int get pageNumber => throw _privateConstructorUsedError;
   String? get previewUrl => throw _privateConstructorUsedError;
-  int get rate => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BookDetailPagePreviewCopyWith<BookDetailPagePreview> get copyWith =>
@@ -1112,7 +1112,7 @@ abstract class $BookDetailPagePreviewCopyWith<$Res> {
           $Res Function(BookDetailPagePreview) then) =
       _$BookDetailPagePreviewCopyWithImpl<$Res, BookDetailPagePreview>;
   @useResult
-  $Res call({int pageNumber, String? previewUrl, int rate});
+  $Res call({int pageNumber, String? previewUrl, int rating});
 }
 
 /// @nodoc
@@ -1131,7 +1131,7 @@ class _$BookDetailPagePreviewCopyWithImpl<$Res,
   $Res call({
     Object? pageNumber = null,
     Object? previewUrl = freezed,
-    Object? rate = null,
+    Object? rating = null,
   }) {
     return _then(_value.copyWith(
       pageNumber: null == pageNumber
@@ -1142,9 +1142,9 @@ class _$BookDetailPagePreviewCopyWithImpl<$Res,
           ? _value.previewUrl
           : previewUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -1159,7 +1159,7 @@ abstract class _$$BookDetailPagePreviewImplCopyWith<$Res>
       __$$BookDetailPagePreviewImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int pageNumber, String? previewUrl, int rate});
+  $Res call({int pageNumber, String? previewUrl, int rating});
 }
 
 /// @nodoc
@@ -1176,7 +1176,7 @@ class __$$BookDetailPagePreviewImplCopyWithImpl<$Res>
   $Res call({
     Object? pageNumber = null,
     Object? previewUrl = freezed,
-    Object? rate = null,
+    Object? rating = null,
   }) {
     return _then(_$BookDetailPagePreviewImpl(
       pageNumber: null == pageNumber
@@ -1187,9 +1187,9 @@ class __$$BookDetailPagePreviewImplCopyWithImpl<$Res>
           ? _value.previewUrl
           : previewUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1201,18 +1201,18 @@ class _$BookDetailPagePreviewImpl
     with DiagnosticableTreeMixin
     implements _BookDetailPagePreview {
   const _$BookDetailPagePreviewImpl(
-      {required this.pageNumber, this.previewUrl, required this.rate});
+      {required this.pageNumber, this.previewUrl, required this.rating});
 
   @override
   final int pageNumber;
   @override
   final String? previewUrl;
   @override
-  final int rate;
+  final int rating;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookDetailPagePreview(pageNumber: $pageNumber, previewUrl: $previewUrl, rate: $rate)';
+    return 'BookDetailPagePreview(pageNumber: $pageNumber, previewUrl: $previewUrl, rating: $rating)';
   }
 
   @override
@@ -1222,7 +1222,7 @@ class _$BookDetailPagePreviewImpl
       ..add(DiagnosticsProperty('type', 'BookDetailPagePreview'))
       ..add(DiagnosticsProperty('pageNumber', pageNumber))
       ..add(DiagnosticsProperty('previewUrl', previewUrl))
-      ..add(DiagnosticsProperty('rate', rate));
+      ..add(DiagnosticsProperty('rating', rating));
   }
 
   @override
@@ -1234,11 +1234,11 @@ class _$BookDetailPagePreviewImpl
                 other.pageNumber == pageNumber) &&
             (identical(other.previewUrl, previewUrl) ||
                 other.previewUrl == previewUrl) &&
-            (identical(other.rate, rate) || other.rate == rate));
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pageNumber, previewUrl, rate);
+  int get hashCode => Object.hash(runtimeType, pageNumber, previewUrl, rating);
 
   @JsonKey(ignore: true)
   @override
@@ -1252,14 +1252,14 @@ abstract class _BookDetailPagePreview implements BookDetailPagePreview {
   const factory _BookDetailPagePreview(
       {required final int pageNumber,
       final String? previewUrl,
-      required final int rate}) = _$BookDetailPagePreviewImpl;
+      required final int rating}) = _$BookDetailPagePreviewImpl;
 
   @override
   int get pageNumber;
   @override
   String? get previewUrl;
   @override
-  int get rate;
+  int get rating;
   @override
   @JsonKey(ignore: true)
   _$$BookDetailPagePreviewImplCopyWith<_$BookDetailPagePreviewImpl>

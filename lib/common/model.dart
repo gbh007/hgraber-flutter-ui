@@ -7,6 +7,7 @@ part 'model.freezed.dart';
 class GlobalModel with _$GlobalModel {
   const factory GlobalModel({
     required String baseUrl,
+    required String token,
     required double scale,
     required int bookOnPage,
   }) = _GlobalModel;

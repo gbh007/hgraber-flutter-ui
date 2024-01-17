@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hgraber_ui/features/book_list/bloc/model.dart';
-import 'package:hgraber_ui/widgets/rate.dart';
+import 'package:hgraber_ui/widgets/rating.dart';
 
 class BookBarWidget extends StatelessWidget {
   final BookInfo info;
@@ -28,7 +28,7 @@ class BookBarWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('#${info.id}'),
-            RateWidget(info.rating, updateRating: updateRating),
+            RatingWidget(info.rating, updateRating: updateRating),
             Text('Страниц: ${info.pageCount}'),
           ],
         ),

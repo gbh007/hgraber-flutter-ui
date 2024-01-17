@@ -2,21 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hgraber_ui/features/book/bloc/model.dart';
+import 'package:hgraber_ui/widgets/image_widget.dart';
 
-import 'package:hgraber_ui/widgets/rate.dart';
-import 'image_preview_widget.dart';
+import 'package:hgraber_ui/widgets/rating.dart';
 
 class BookPagesPreviewWidget extends StatelessWidget {
   final List<BookPagePreview> pages;
   final void Function(int)? onTap;
-  final void Function(int page, int rate)? updateRate;
+  final void Function(int page, int rating)? updateRating;
   final TextTheme textTheme;
   final ColorScheme colorScheme;
 
   const BookPagesPreviewWidget({
     required this.pages,
     this.onTap,
-    this.updateRate,
+    this.updateRating,
     required this.textTheme,
     required this.colorScheme,
     super.key,
@@ -43,21 +43,22 @@ class BookPagesPreviewWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: ImagePreviewWidget(
+                child: ImageWidget(
                   url: page.previewUrl,
                   colorScheme: colorScheme,
                   textTheme: textTheme,
                 ),
               ),
               Center(
-                  child: RateWidget(
-                page.rate,
-                updateRating: (rate) {
-                  if (updateRate != null) {
-                    updateRate!(page.pageNumber, rate);
-                  }
-                },
-              )),
+                child: RatingWidget(
+                  page.rating,
+                  updateRating: (rating) {
+                    if (updateRating != null) {
+                      updateRating!(page.pageNumber, rating);
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

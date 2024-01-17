@@ -21,7 +21,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
             parsedPage: model.parsedPage,
             pageCount: model.pageCount,
             pageLoadedPercent: model.pageLoadedPercent,
-            rating: model.rate,
+            rating: model.rating,
           ),
           name: model.name,
           attributes: model.attributes != null
@@ -37,7 +37,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
               ? model.pages!
                   .map((page) => BookPagePreview(
                         pageNumber: page.pageNumber,
-                        rate: page.rate,
+                        rating: page.rating,
                         previewUrl: page.previewUrl,
                       ))
                   .toList()
@@ -49,7 +49,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
     });
     on<RateBookEvent>((event, emit) async {
       try {
-        await _repository.updateBookRating(event.id, event.rate);
+        await _repository.updateBookRating(event.id, event.rating);
         add(LoadingBookEvent(event.id));
       } catch (e) {
         emit(BookScreenErrorState(
@@ -60,7 +60,7 @@ class BookScreenBloc extends Bloc<BookScreenEvent, BookScreenState> {
     on<RateBookPageEvent>((event, emit) async {
       try {
         await _repository.updatePageRating(
-            event.id, event.pageNumber, event.rate);
+            event.id, event.pageNumber, event.rating);
         add(LoadingBookEvent(event.id));
       } catch (e) {
         emit(BookScreenErrorState(

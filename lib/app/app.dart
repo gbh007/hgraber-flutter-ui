@@ -14,7 +14,7 @@ final class AppAssembly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = Repository(baseUrl);
+    final repository = Repository(baseUrl, '');
     return MultiBlocProvider(
       providers: [
         RepositoryProvider(create: (_) => repository),

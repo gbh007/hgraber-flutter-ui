@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GlobalModel {
   String get baseUrl => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
   double get scale => throw _privateConstructorUsedError;
   int get bookOnPage => throw _privateConstructorUsedError;
 
@@ -31,7 +32,7 @@ abstract class $GlobalModelCopyWith<$Res> {
           GlobalModel value, $Res Function(GlobalModel) then) =
       _$GlobalModelCopyWithImpl<$Res, GlobalModel>;
   @useResult
-  $Res call({String baseUrl, double scale, int bookOnPage});
+  $Res call({String baseUrl, String token, double scale, int bookOnPage});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$GlobalModelCopyWithImpl<$Res, $Val extends GlobalModel>
   @override
   $Res call({
     Object? baseUrl = null,
+    Object? token = null,
     Object? scale = null,
     Object? bookOnPage = null,
   }) {
@@ -55,6 +57,10 @@ class _$GlobalModelCopyWithImpl<$Res, $Val extends GlobalModel>
       baseUrl: null == baseUrl
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
               as String,
       scale: null == scale
           ? _value.scale
@@ -76,7 +82,7 @@ abstract class _$$GlobalModelImplCopyWith<$Res>
       __$$GlobalModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String baseUrl, double scale, int bookOnPage});
+  $Res call({String baseUrl, String token, double scale, int bookOnPage});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$GlobalModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? baseUrl = null,
+    Object? token = null,
     Object? scale = null,
     Object? bookOnPage = null,
   }) {
@@ -98,6 +105,10 @@ class __$$GlobalModelImplCopyWithImpl<$Res>
       baseUrl: null == baseUrl
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
               as String,
       scale: null == scale
           ? _value.scale
@@ -115,10 +126,15 @@ class __$$GlobalModelImplCopyWithImpl<$Res>
 
 class _$GlobalModelImpl with DiagnosticableTreeMixin implements _GlobalModel {
   const _$GlobalModelImpl(
-      {required this.baseUrl, required this.scale, required this.bookOnPage});
+      {required this.baseUrl,
+      required this.token,
+      required this.scale,
+      required this.bookOnPage});
 
   @override
   final String baseUrl;
+  @override
+  final String token;
   @override
   final double scale;
   @override
@@ -126,7 +142,7 @@ class _$GlobalModelImpl with DiagnosticableTreeMixin implements _GlobalModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GlobalModel(baseUrl: $baseUrl, scale: $scale, bookOnPage: $bookOnPage)';
+    return 'GlobalModel(baseUrl: $baseUrl, token: $token, scale: $scale, bookOnPage: $bookOnPage)';
   }
 
   @override
@@ -135,6 +151,7 @@ class _$GlobalModelImpl with DiagnosticableTreeMixin implements _GlobalModel {
     properties
       ..add(DiagnosticsProperty('type', 'GlobalModel'))
       ..add(DiagnosticsProperty('baseUrl', baseUrl))
+      ..add(DiagnosticsProperty('token', token))
       ..add(DiagnosticsProperty('scale', scale))
       ..add(DiagnosticsProperty('bookOnPage', bookOnPage));
   }
@@ -145,13 +162,15 @@ class _$GlobalModelImpl with DiagnosticableTreeMixin implements _GlobalModel {
         (other.runtimeType == runtimeType &&
             other is _$GlobalModelImpl &&
             (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
+            (identical(other.token, token) || other.token == token) &&
             (identical(other.scale, scale) || other.scale == scale) &&
             (identical(other.bookOnPage, bookOnPage) ||
                 other.bookOnPage == bookOnPage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, baseUrl, scale, bookOnPage);
+  int get hashCode =>
+      Object.hash(runtimeType, baseUrl, token, scale, bookOnPage);
 
   @JsonKey(ignore: true)
   @override
@@ -163,11 +182,14 @@ class _$GlobalModelImpl with DiagnosticableTreeMixin implements _GlobalModel {
 abstract class _GlobalModel implements GlobalModel {
   const factory _GlobalModel(
       {required final String baseUrl,
+      required final String token,
       required final double scale,
       required final int bookOnPage}) = _$GlobalModelImpl;
 
   @override
   String get baseUrl;
+  @override
+  String get token;
   @override
   double get scale;
   @override

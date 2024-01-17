@@ -15,9 +15,9 @@ class LoadingBookEvent extends ReaderScreenEvent {
 }
 
 class UpdateBookPageRatingEvent extends ReaderScreenEvent {
-  final int id, page, rate;
+  final int id, page, rating;
 
-  UpdateBookPageRatingEvent(this.id, this.page, this.rate);
+  UpdateBookPageRatingEvent(this.id, this.page, this.rating);
 }
 
 sealed class ReaderScreenState {}
@@ -51,7 +51,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
             pages: model.pages
                     ?.map((page) => Page(
                           pageNumber: page.pageNumber,
-                          rating: page.rate,
+                          rating: page.rating,
                           previewUrl: page.previewUrl,
                         ))
                     .toList() ??
@@ -64,7 +64,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     });
     on<UpdateBookPageRatingEvent>((event, emit) async {
       try {
-        await _client.updatePageRating(event.id, event.page, event.rate);
+        await _client.updatePageRating(event.id, event.page, event.rating);
         add(LoadingBookEvent(event.id));
       } catch (e) {
         emit(ReaderScreenErrorState(e.toString()));

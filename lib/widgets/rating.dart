@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class RateWidget extends StatelessWidget {
+class RatingWidget extends StatelessWidget {
   final int rate;
   final void Function(int rate)? updateRating;
 
-  const RateWidget(
+  const RatingWidget(
     this.rate, {
     this.updateRating,
     super.key,

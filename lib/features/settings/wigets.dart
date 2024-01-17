@@ -31,6 +31,17 @@ class SettingsWidget extends StatelessWidget {
         ),
         Row(
           children: [
+            const Expanded(child: Text('Токен сервера')),
+            Expanded(
+              child: TextField(
+                controller: TextEditingController(text: model.token),
+                onSubmitted: (value) => onApply(model.copyWith(token: value)),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
             const Expanded(child: Text('Масштабирование')),
             Expanded(
               child: TextField(

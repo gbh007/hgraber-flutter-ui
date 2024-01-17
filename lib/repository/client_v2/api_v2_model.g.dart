@@ -16,7 +16,7 @@ APIv2BookShortInfo _$APIv2BookShortInfoFromJson(Map<String, dynamic> json) =>
       parsedPage: json['parsed_page'] as bool,
       pageCount: json['page_count'] as int,
       pageLoadedPercent: (json['page_loaded_percent'] as num).toDouble(),
-      rate: json['rate'] as int,
+      rating: json['rating'] as int,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       hasMoreTags: json['has_more_tags'] as bool,
     );
@@ -31,7 +31,7 @@ Map<String, dynamic> _$APIv2BookShortInfoToJson(APIv2BookShortInfo instance) =>
       'parsed_page': instance.parsedPage,
       'page_count': instance.pageCount,
       'page_loaded_percent': instance.pageLoadedPercent,
-      'rate': instance.rate,
+      'rating': instance.rating,
       'tags': instance.tags,
       'has_more_tags': instance.hasMoreTags,
     };
@@ -81,7 +81,7 @@ APIv2BookDetailInfo _$APIv2BookDetailInfoFromJson(Map<String, dynamic> json) =>
       parsedPage: json['parsed_page'] as bool,
       pageCount: json['page_count'] as int,
       pageLoadedPercent: (json['page_loaded_percent'] as num).toDouble(),
-      rate: json['rate'] as int,
+      rating: json['rating'] as int,
       pages: (json['pages'] as List<dynamic>?)
           ?.map((e) =>
               APIv2BookDetailPagePreview.fromJson(e as Map<String, dynamic>))
@@ -103,7 +103,7 @@ Map<String, dynamic> _$APIv2BookDetailInfoToJson(
       'parsed_page': instance.parsedPage,
       'page_count': instance.pageCount,
       'page_loaded_percent': instance.pageLoadedPercent,
-      'rate': instance.rate,
+      'rating': instance.rating,
       'pages': instance.pages,
       'attributes': instance.attributes,
     };
@@ -113,7 +113,7 @@ APIv2BookDetailPagePreview _$APIv2BookDetailPagePreviewFromJson(
     APIv2BookDetailPagePreview(
       pageNumber: json['page_number'] as int,
       previewUrl: json['preview_url'] as String?,
-      rate: json['rate'] as int,
+      rating: json['rating'] as int,
     );
 
 Map<String, dynamic> _$APIv2BookDetailPagePreviewToJson(
@@ -121,7 +121,7 @@ Map<String, dynamic> _$APIv2BookDetailPagePreviewToJson(
     <String, dynamic>{
       'page_number': instance.pageNumber,
       'preview_url': instance.previewUrl,
-      'rate': instance.rate,
+      'rating': instance.rating,
     };
 
 APIv2BookDetailAttributeInfo _$APIv2BookDetailAttributeInfoFromJson(

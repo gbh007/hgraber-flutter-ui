@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hgraber_ui/widgets/image_widget.dart';
 
-import 'package:hgraber_ui/widgets/rate.dart';
+import 'package:hgraber_ui/widgets/rating.dart';
 
 import '../bloc.dart';
 import '../model.dart';
-import 'image_widget.dart';
 
 class ReaderWidget extends StatelessWidget {
   final Book book;
@@ -36,7 +36,7 @@ class ReaderWidget extends StatelessWidget {
                   'Страница $state из ${book.pageCount}',
                   style: textTheme.bodyLarge,
                 ),
-                RateWidget(
+                RatingWidget(
                   page?.rating ?? 0,
                   updateRating: (rating) {
                     if (page == null || updateRating == null) {

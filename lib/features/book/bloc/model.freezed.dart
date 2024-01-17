@@ -541,7 +541,7 @@ abstract class _Book implements Book {
 mixin _$BookPagePreview {
   int get pageNumber => throw _privateConstructorUsedError;
   String? get previewUrl => throw _privateConstructorUsedError;
-  int get rate => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BookPagePreviewCopyWith<BookPagePreview> get copyWith =>
@@ -554,7 +554,7 @@ abstract class $BookPagePreviewCopyWith<$Res> {
           BookPagePreview value, $Res Function(BookPagePreview) then) =
       _$BookPagePreviewCopyWithImpl<$Res, BookPagePreview>;
   @useResult
-  $Res call({int pageNumber, String? previewUrl, int rate});
+  $Res call({int pageNumber, String? previewUrl, int rating});
 }
 
 /// @nodoc
@@ -572,7 +572,7 @@ class _$BookPagePreviewCopyWithImpl<$Res, $Val extends BookPagePreview>
   $Res call({
     Object? pageNumber = null,
     Object? previewUrl = freezed,
-    Object? rate = null,
+    Object? rating = null,
   }) {
     return _then(_value.copyWith(
       pageNumber: null == pageNumber
@@ -583,9 +583,9 @@ class _$BookPagePreviewCopyWithImpl<$Res, $Val extends BookPagePreview>
           ? _value.previewUrl
           : previewUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -599,7 +599,7 @@ abstract class _$$BookPagePreviewImplCopyWith<$Res>
       __$$BookPagePreviewImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int pageNumber, String? previewUrl, int rate});
+  $Res call({int pageNumber, String? previewUrl, int rating});
 }
 
 /// @nodoc
@@ -615,7 +615,7 @@ class __$$BookPagePreviewImplCopyWithImpl<$Res>
   $Res call({
     Object? pageNumber = null,
     Object? previewUrl = freezed,
-    Object? rate = null,
+    Object? rating = null,
   }) {
     return _then(_$BookPagePreviewImpl(
       pageNumber: null == pageNumber
@@ -626,9 +626,9 @@ class __$$BookPagePreviewImplCopyWithImpl<$Res>
           ? _value.previewUrl
           : previewUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: null == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -640,18 +640,18 @@ class _$BookPagePreviewImpl
     with DiagnosticableTreeMixin
     implements _BookPagePreview {
   const _$BookPagePreviewImpl(
-      {required this.pageNumber, this.previewUrl, required this.rate});
+      {required this.pageNumber, this.previewUrl, required this.rating});
 
   @override
   final int pageNumber;
   @override
   final String? previewUrl;
   @override
-  final int rate;
+  final int rating;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookPagePreview(pageNumber: $pageNumber, previewUrl: $previewUrl, rate: $rate)';
+    return 'BookPagePreview(pageNumber: $pageNumber, previewUrl: $previewUrl, rating: $rating)';
   }
 
   @override
@@ -661,7 +661,7 @@ class _$BookPagePreviewImpl
       ..add(DiagnosticsProperty('type', 'BookPagePreview'))
       ..add(DiagnosticsProperty('pageNumber', pageNumber))
       ..add(DiagnosticsProperty('previewUrl', previewUrl))
-      ..add(DiagnosticsProperty('rate', rate));
+      ..add(DiagnosticsProperty('rating', rating));
   }
 
   @override
@@ -673,11 +673,11 @@ class _$BookPagePreviewImpl
                 other.pageNumber == pageNumber) &&
             (identical(other.previewUrl, previewUrl) ||
                 other.previewUrl == previewUrl) &&
-            (identical(other.rate, rate) || other.rate == rate));
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pageNumber, previewUrl, rate);
+  int get hashCode => Object.hash(runtimeType, pageNumber, previewUrl, rating);
 
   @JsonKey(ignore: true)
   @override
@@ -691,14 +691,14 @@ abstract class _BookPagePreview implements BookPagePreview {
   const factory _BookPagePreview(
       {required final int pageNumber,
       final String? previewUrl,
-      required final int rate}) = _$BookPagePreviewImpl;
+      required final int rating}) = _$BookPagePreviewImpl;
 
   @override
   int get pageNumber;
   @override
   String? get previewUrl;
   @override
-  int get rate;
+  int get rating;
   @override
   @JsonKey(ignore: true)
   _$$BookPagePreviewImplCopyWith<_$BookPagePreviewImpl> get copyWith =>

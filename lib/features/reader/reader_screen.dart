@@ -39,10 +39,10 @@ final class ReaderScreen extends StatelessWidget {
                 ReaderNavigationWidget(pageCount: state.book.pageCount),
             child: ReaderWidget(
               book: state.book,
-              updateRating: (page, rate) {
+              updateRating: (page, rating) {
                 context
                     .read<ReaderScreenBloc>()
-                    .add(UpdateBookPageRatingEvent(id, page, rate));
+                    .add(UpdateBookPageRatingEvent(id, page, rating));
               },
               colorScheme: colorScheme,
               textTheme: textTheme,

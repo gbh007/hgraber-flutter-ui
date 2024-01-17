@@ -4,12 +4,13 @@ import 'client_v2/api_v2_client.dart';
 class Repository {
   late APIv2Client _v2client;
 
-  Repository(String baseUrl) {
-    _v2client = APIv2Client(baseUrl: baseUrl);
+  Repository(String baseUrl, String token) {
+    _v2client = APIv2Client(baseUrl: baseUrl, token: token);
   }
 
-  void updateBaseUrl(String baseUrl) {
-    _v2client = APIv2Client(baseUrl: baseUrl);
+  void updateBaseUrl(String baseUrl, String token) {
+    // FIXME: сделать без токена
+    _v2client = APIv2Client(baseUrl: baseUrl, token: token);
   }
 
   Future<Dashboard> info() {
@@ -38,7 +39,7 @@ class Repository {
           parsedPage: book.parsedPage,
           pageCount: book.pageCount,
           pageLoadedPercent: book.pageLoadedPercent,
-          rate: book.rate,
+          rating: book.rating,
           attributes: book.attributes
               ?.map((attr) =>
                   BookDetailAttributeInfo(name: attr.name, values: attr.values))
@@ -46,7 +47,7 @@ class Repository {
           pages: book.pages
               ?.map((page) => BookDetailPagePreview(
                   pageNumber: page.pageNumber,
-                  rate: page.rate,
+                  rating: page.rating,
                   previewUrl: page.previewUrl))
               .toList(),
         ));
@@ -64,7 +65,7 @@ class Repository {
                     parsedPage: book.parsedPage,
                     pageCount: book.pageCount,
                     pageLoadedPercent: book.pageLoadedPercent,
-                    rate: book.rate,
+                    rating: book.rating,
                     tags: book.tags,
                     hasMoreTags: book.hasMoreTags,
                   ))
@@ -79,11 +80,11 @@ class Repository {
         ));
   }
 
-  Future<void> updateBookRating(int id, int rate) {
-    return _v2client.updateBookRating(id, rate);
+  Future<void> updateBookRating(int id, int rating) {
+    return _v2client.updateBookRating(id, rating);
   }
 
-  Future<void> updatePageRating(int id, int pageNumber, int rate) {
-    return _v2client.updatePageRating(id, pageNumber, rate);
+  Future<void> updatePageRating(int id, int pageNumber, int rating) {
+    return _v2client.updatePageRating(id, pageNumber, rating);
   }
 }
